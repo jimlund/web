@@ -15790,7 +15790,7 @@ function getDataDir() {
 
   if (host !== 'localhost' && host !== '127.0.0.1') {
     return (
-      'https://unpkg.com/ideogram@' + version + '/dist/data/bands/native/'
+      'https://rawgit.com/jimlund/web/master/data/bands/native/'
     );
   }
 
@@ -16135,6 +16135,7 @@ function rotateAndToggleDisplay(chromosome) {
 function getSvg() {
   return d3.select(this.selector).node();
 }
+
 
 
 
