@@ -1,3 +1,4 @@
+/*! Ideogram.js, version 0.12.0.  Developed by Eric Weitz.  https://github.com/eweitz/ideogram.  Public domain (CC0 1.0). */
 /******/ (function(modules) { // webpackBootstrap
 /******/ 	// The module cache
 /******/ 	var installedModules = {};
@@ -6064,106 +6065,127 @@ return Promise$2;
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-class Ploidy {
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return Ploidy; });
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
-  constructor(config) {
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+var Ploidy = function () {
+  function Ploidy(config) {
+    _classCallCheck(this, Ploidy);
+
     this._config = config;
     this._description = this._normalize(this._config.ploidyDesc);
   }
 
   // Get number of chromosomes in a chromosome set
-  getChromosomesNumber(setNumber) {
-    if (this._config.ploidyDesc) {
-      var chrSetCode = this._config.ploidyDesc[setNumber];
-      if (chrSetCode instanceof Object) {
-        return Object.keys(chrSetCode)[0].length;
-      } else {
-        return chrSetCode.length;
-      }
-    } else {
-      return this._config.ploidy || 1;
-    }
-  }
 
-  // Normalize use defined description
-  _normalize(description) {
-    var normalized, key, descValue;
 
-    // Return the same if no description provided
-    if (!description) {
-      return description;
-    }
-
-    // Array of normalized description objects
-    normalized = [];
-
-    // Loop through description and normalize
-    for (key in description) {
-      descValue = description[key];
-      if (typeof descValue === 'string') {
-        if (this._config.orientation === 'vertical') {
-          descValue = descValue.split('').reverse();
+  _createClass(Ploidy, [{
+    key: 'getChromosomesNumber',
+    value: function getChromosomesNumber(setNumber) {
+      if (this._config.ploidyDesc) {
+        var chrSetCode = this._config.ploidyDesc[setNumber];
+        if (chrSetCode instanceof Object) {
+          return Object.keys(chrSetCode)[0].length;
+        } else {
+          return chrSetCode.length;
         }
-        normalized.push({
-          ancestors: descValue,
-          existence: this._getexistenceArray(descValue.length)
-        });
       } else {
-        normalized.push({
-          ancestors: Object.keys(descValue)[0],
-          existence: descValue[Object.keys(descValue)[0]]
-        });
+        return this._config.ploidy || 1;
       }
     }
 
-    return normalized;
-  }
+    // Normalize use defined description
 
-  // Get array filled by '11' elements
-  _getexistenceArray(length) {
-    var array = [];
+  }, {
+    key: '_normalize',
+    value: function _normalize(description) {
+      var normalized, key, descValue;
 
-    for (var i = 0; i < length; i++) {
-      array.push('11');
+      // Return the same if no description provided
+      if (!description) {
+        return description;
+      }
+
+      // Array of normalized description objects
+      normalized = [];
+
+      // Loop through description and normalize
+      for (key in description) {
+        descValue = description[key];
+        if (typeof descValue === 'string') {
+          if (this._config.orientation === 'vertical') {
+            descValue = descValue.split('').reverse();
+          }
+          normalized.push({
+            ancestors: descValue,
+            existence: this._getexistenceArray(descValue.length)
+          });
+        } else {
+          normalized.push({
+            ancestors: Object.keys(descValue)[0],
+            existence: descValue[Object.keys(descValue)[0]]
+          });
+        }
+      }
+
+      return normalized;
     }
 
-    return array;
-  }
+    // Get array filled by '11' elements
 
-  getSetSize(chrSetNumber) {
-    if (this._description) {
-      return this._description[chrSetNumber].ancestors.length;
-    } else {
-      return 1;
+  }, {
+    key: '_getexistenceArray',
+    value: function _getexistenceArray(length) {
+      var array = [];
+
+      for (var i = 0; i < length; i++) {
+        array.push('11');
+      }
+
+      return array;
     }
-  }
-
-  // Get ancestor letter
-  getAncestor(chrSetNumber, chrNumber) {
-    if (this._description) {
-      return this._description[chrSetNumber].ancestors[chrNumber];
-    } else {
-      return '';
+  }, {
+    key: 'getSetSize',
+    value: function getSetSize(chrSetNumber) {
+      if (this._description) {
+        return this._description[chrSetNumber].ancestors.length;
+      } else {
+        return 1;
+      }
     }
-  }
 
-  // Check if chromosome's arm should be rendered.
-  // If no description was provided, method returns true and
-  // something another depending on user provided description.
-  exists(chrSetNumber, chrNumber, armNumber) {
-    if (this._description) {
-      var desc =
-        this._description[chrSetNumber].existence[chrNumber][armNumber];
-      return Number(desc) > 0;
-    } else {
-      return true;
+    // Get ancestor letter
+
+  }, {
+    key: 'getAncestor',
+    value: function getAncestor(chrSetNumber, chrNumber) {
+      if (this._description) {
+        return this._description[chrSetNumber].ancestors[chrNumber];
+      } else {
+        return '';
+      }
     }
-  }
 
-}
-/* harmony export (immutable) */ __webpack_exports__["a"] = Ploidy;
+    // Check if chromosome's arm should be rendered.
+    // If no description was provided, method returns true and
+    // something another depending on user provided description.
 
+  }, {
+    key: 'exists',
+    value: function exists(chrSetNumber, chrNumber, armNumber) {
+      if (this._description) {
+        var desc = this._description[chrSetNumber].existence[chrNumber][armNumber];
+        return Number(desc) > 0;
+      } else {
+        return true;
+      }
+    }
+  }]);
 
+  return Ploidy;
+}();
 
 /***/ }),
 /* 91 */
@@ -6179,7 +6201,6 @@ window.Ideogram = __WEBPACK_IMPORTED_MODULE_0__ideogram__["a" /* default */];
 
 // Enable references to Ideogram when imported as an ES6 module
 /* harmony default export */ __webpack_exports__["default"] = (__WEBPACK_IMPORTED_MODULE_0__ideogram__["a" /* default */]);
-
 
 /***/ }),
 /* 92 */
@@ -6203,6 +6224,10 @@ window.Ideogram = __WEBPACK_IMPORTED_MODULE_0__ideogram__["a" /* default */];
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_13__sex_chromosomes__ = __webpack_require__(257);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_14__coordinate_converters__ = __webpack_require__(258);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_15__lib__ = __webpack_require__(259);
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
 /**
  * @fileoverview Core module of Ideogram.js, links all other modules
  * This file defines the Ideogram class, its constructor method, and its
@@ -6239,8 +6264,9 @@ d3.max = __WEBPACK_IMPORTED_MODULE_5_d3_array__["d" /* max */];
 
 
 
-class Ideogram {
-  constructor(config) {
+var Ideogram = function () {
+  function Ideogram(config) {
+    _classCallCheck(this, Ideogram);
 
     // Functions from init.js
     this.configure = __WEBPACK_IMPORTED_MODULE_8__init__["a" /* configure */];
@@ -6298,115 +6324,135 @@ class Ideogram {
     this.rotateAndToggleDisplay = __WEBPACK_IMPORTED_MODULE_15__lib__["g" /* rotateAndToggleDisplay */];
     this.getSvg = __WEBPACK_IMPORTED_MODULE_15__lib__["f" /* getSvg */];
 
-    this.configure(config)
+    this.configure(config);
   }
 
   /**
    * Get the current version of Ideogram.js
    */
-  static get version() {
-    return __WEBPACK_IMPORTED_MODULE_7__version__["a" /* default */];
-  }
 
-  /**
-  * Enable use of D3 in client apps, via "d3 = Ideogram.d3"
-  */
-  static get d3() {
-    return d3;
-  }
 
-  /**
-  * e.g. "Homo sapiens" -> "homo-sapiens"
-  */
-  static slugify(value) {
-    return value.toLowerCase().replace(' ', '-');
-  }
+  _createClass(Ideogram, null, [{
+    key: 'slugify',
 
-  /**
-   * TODO: Create an 'es6-natural-sort' package for this in npm, such
-   * that it can be pulled in via ES6 import.
-   *
-   * This function doesn't belong in Ideogram-specific code.
-   *
-   * From: https://github.com/overset/javascript-natural-sort
-   */
-  static naturalSort(a, b) {
 
-    var q, r,
-      c = /(^([+\-]?\d+(?:\.\d*)?(?:[eE][+\-]?\d+)?(?=\D|\s|$))|^0x[\da-fA-F]+$|\d+)/g,
-      d = /^\s+|\s+$/g,
-      e = /\s+/g,
-      f = /(^([\w ]+,?[\w ]+)?[\w ]+,?[\w ]+\d+:\d+(:\d+)?[\w ]?|^\d{1,4}[\/\-]\d{1,4}[\/\-]\d{1,4}|^\w+, \w+ \d+, \d{4})/,
-      g = /^0x[0-9a-f]+$/i,
-      h = /^0/,
-      i = function(a) {
-        return (Ideogram.naturalSort.insensitive && (String(a)).toLowerCase() || String(a)).replace(d, "");
+    /**
+    * e.g. "Homo sapiens" -> "homo-sapiens"
+    */
+    value: function slugify(value) {
+      return value.toLowerCase().replace(' ', '-');
+    }
+
+    /**
+     * TODO: Create an 'es6-natural-sort' package for this in npm, such
+     * that it can be pulled in via ES6 import.
+     *
+     * This function doesn't belong in Ideogram-specific code.
+     *
+     * From: https://github.com/overset/javascript-natural-sort
+     */
+
+  }, {
+    key: 'naturalSort',
+    value: function naturalSort(a, b) {
+
+      var q,
+          r,
+          c = /(^([+\-]?\d+(?:\.\d*)?(?:[eE][+\-]?\d+)?(?=\D|\s|$))|^0x[\da-fA-F]+$|\d+)/g,
+          d = /^\s+|\s+$/g,
+          e = /\s+/g,
+          f = /(^([\w ]+,?[\w ]+)?[\w ]+,?[\w ]+\d+:\d+(:\d+)?[\w ]?|^\d{1,4}[\/\-]\d{1,4}[\/\-]\d{1,4}|^\w+, \w+ \d+, \d{4})/,
+          g = /^0x[0-9a-f]+$/i,
+          h = /^0/,
+          i = function i(a) {
+        return (Ideogram.naturalSort.insensitive && String(a).toLowerCase() || String(a)).replace(d, "");
       },
-      j = i(a),
-      k = i(b),
-      l = j.replace(c, "\0$1\0").replace(/\0$/, "").replace(/^\0/, "").split("\0"),
-      m = k.replace(c, "\0$1\0").replace(/\0$/, "").replace(/^\0/, "").split("\0"),
-      n = parseInt(j.match(g), 16) || l.length !== 1 && Date.parse(j),
-      o = parseInt(k.match(g), 16) || n && k.match(f) && Date.parse(k) || null,
-      p = function(a, b) {
+          j = i(a),
+          k = i(b),
+          l = j.replace(c, "\0$1\0").replace(/\0$/, "").replace(/^\0/, "").split("\0"),
+          m = k.replace(c, "\0$1\0").replace(/\0$/, "").replace(/^\0/, "").split("\0"),
+          n = parseInt(j.match(g), 16) || l.length !== 1 && Date.parse(j),
+          o = parseInt(k.match(g), 16) || n && k.match(f) && Date.parse(k) || null,
+          p = function p(a, b) {
         return (!a.match(h) || b == 1) && parseFloat(a) || a.replace(e, " ").replace(d, "") || 0;
-      }; if (o) {
-      if (n < o) {
-        return -1;
-      } if (n > o) {
-        return 1;
-      }
-    } for (var s = 0, t = l.length, u = m.length, v = Math.max(t, u); s < v; s++) {
-      if (q = p(l[s] || "", t), r = p(m[s] || "", u), isNaN(q) !== isNaN(r)) {
-        return isNaN(q) ? 1 : -1;
-      } if (/[^\x00-\x80]/.test(q + r) && q.localeCompare) {
-        var w = q.localeCompare(r); return w / Math.abs(w);
-      } if (q < r) {
-        return -1;
-      } if (q > r) {
-        return 1;
+      };if (o) {
+        if (n < o) {
+          return -1;
+        }if (n > o) {
+          return 1;
+        }
+      }for (var s = 0, t = l.length, u = m.length, v = Math.max(t, u); s < v; s++) {
+        if (q = p(l[s] || "", t), r = p(m[s] || "", u), isNaN(q) !== isNaN(r)) {
+          return isNaN(q) ? 1 : -1;
+        }if (/[^\x00-\x80]/.test(q + r) && q.localeCompare) {
+          var w = q.localeCompare(r);return w / Math.abs(w);
+        }if (q < r) {
+          return -1;
+        }if (q > r) {
+          return 1;
+        }
       }
     }
-  }
 
-  /**
-   * Sorts two chromosome objects by type and name
-   * - Nuclear chromosomes come before non-nuclear chromosomes.
-   * - Among nuclear chromosomes, use "natural sorting", e.g.
-   *   numbers come before letters
-   * - Among non-nuclear chromosomes, i.e. "MT" (mitochondrial DNA) and
-   *   "CP" (chromoplast DNA), MT comes first
-   *
-   *
-   * @param a Chromosome object "A"
-   * @param b Chromosome object "B"
-   * @returns {Number} JavaScript sort order indicator
-   */
-  static sortChromosomes(a, b) {
-    var aIsNuclear = a.type === 'nuclear',
-      bIsNuclear = b.type === 'nuclear',
-      aIsCP = a.type === 'chloroplast',
-      bIsCP = b.type === 'chloroplast',
-      aIsMT = a.type === 'mitochondrion',
-      bIsMT = b.type === 'mitochondrion';
-    // aIsPlastid = aIsMT && a.name !== 'MT', // e.g. B1 in rice genome GCF_001433935.1
-    // bIsPlastid = bIsMT && b.name !== 'MT';
+    /**
+     * Sorts two chromosome objects by type and name
+     * - Nuclear chromosomes come before non-nuclear chromosomes.
+     * - Among nuclear chromosomes, use "natural sorting", e.g.
+     *   numbers come before letters
+     * - Among non-nuclear chromosomes, i.e. "MT" (mitochondrial DNA) and
+     *   "CP" (chromoplast DNA), MT comes first
+     *
+     *
+     * @param a Chromosome object "A"
+     * @param b Chromosome object "B"
+     * @returns {Number} JavaScript sort order indicator
+     */
 
-    if (aIsNuclear && bIsNuclear) {
-      return Ideogram.naturalSort(a.name, b.name);
-    } else if (!aIsNuclear && bIsNuclear) {
-      return 1;
-    } else if (aIsMT && bIsCP) {
-      return 1;
-    } else if (aIsCP && bIsMT) {
-      return -1;
-    } else if (!aIsMT && !aIsCP && (bIsMT || bIsCP)) {
-      return -1;
+  }, {
+    key: 'sortChromosomes',
+    value: function sortChromosomes(a, b) {
+      var aIsNuclear = a.type === 'nuclear',
+          bIsNuclear = b.type === 'nuclear',
+          aIsCP = a.type === 'chloroplast',
+          bIsCP = b.type === 'chloroplast',
+          aIsMT = a.type === 'mitochondrion',
+          bIsMT = b.type === 'mitochondrion';
+      // aIsPlastid = aIsMT && a.name !== 'MT', // e.g. B1 in rice genome GCF_001433935.1
+      // bIsPlastid = bIsMT && b.name !== 'MT';
+
+      if (aIsNuclear && bIsNuclear) {
+        return Ideogram.naturalSort(a.name, b.name);
+      } else if (!aIsNuclear && bIsNuclear) {
+        return 1;
+      } else if (aIsMT && bIsCP) {
+        return 1;
+      } else if (aIsCP && bIsMT) {
+        return -1;
+      } else if (!aIsMT && !aIsCP && (bIsMT || bIsCP)) {
+        return -1;
+      }
     }
-  }
-}
-/* harmony export (immutable) */ __webpack_exports__["a"] = Ideogram;
+  }, {
+    key: 'version',
+    get: function get() {
+      return __WEBPACK_IMPORTED_MODULE_7__version__["a" /* default */];
+    }
 
+    /**
+    * Enable use of D3 in client apps, via "d3 = Ideogram.d3"
+    */
+
+  }, {
+    key: 'd3',
+    get: function get() {
+      return d3;
+    }
+  }]);
+
+  return Ideogram;
+}();
+
+/* harmony default export */ __webpack_exports__["a"] = (Ideogram);
 
 /***/ }),
 /* 93 */
@@ -11981,9 +12027,7 @@ var d3 = Object.assign({}, __WEBPACK_IMPORTED_MODULE_0_d3_request__, __WEBPACK_I
  */
 function configure(config) {
 
-  var orientation,
-    chrWidth, chrHeight,
-    container, rect;
+  var orientation, chrWidth, chrHeight, container, rect;
 
   // Clone the config object, to allow multiple instantiations
   // without picking up prior ideogram's settings
@@ -12015,7 +12059,7 @@ function configure(config) {
       this.config.sex = 'male';
     }
     if (this.config.ploidy === 2 && !this.config.ancestors) {
-      this.config.ancestors = {M: '#ffb6c1', P: '#add8e6'};
+      this.config.ancestors = { M: '#ffb6c1', P: '#add8e6' };
       this.config.ploidyDesc = 'MP';
     }
   }
@@ -12121,11 +12165,7 @@ function configure(config) {
 
   this.initAnnotSettings();
 
-  this.config.chrMargin = (
-    this.config.chrMargin +
-    this.config.chrWidth +
-    this.config.annotTracksHeight * 2
-  );
+  this.config.chrMargin = this.config.chrMargin + this.config.chrWidth + this.config.annotTracksHeight * 2;
 
   if (config.onLoad) {
     this.onLoadCallback = config.onLoad;
@@ -12187,7 +12227,6 @@ function configure(config) {
   this.bandData = {};
 
   this.init();
-
 }
 
 /**
@@ -12195,14 +12234,19 @@ function configure(config) {
  */
 function initDrawChromosomes(bandsArray) {
   var ideo = this,
-    taxids = ideo.config.taxids,
-    ploidy = ideo.config.ploidy,
-    taxid,
-    chrIndex = 0,
-    chrSetNumber = 0,
-    bands,
-    i, j, chrs, chromosome, chrModel,
-    defs, transform;
+      taxids = ideo.config.taxids,
+      ploidy = ideo.config.ploidy,
+      taxid,
+      chrIndex = 0,
+      chrSetNumber = 0,
+      bands,
+      i,
+      j,
+      chrs,
+      chromosome,
+      chrModel,
+      defs,
+      transform;
 
   defs = d3.select(ideo.selector + ' defs');
 
@@ -12210,10 +12254,7 @@ function initDrawChromosomes(bandsArray) {
     taxid = taxids[i];
     chrs = ideo.config.chromosomes[taxid];
 
-    if (
-      typeof chrBands !== 'undefined' &&
-      chrs.length >= chrBands.length / 2
-    ) {
+    if (typeof chrBands !== 'undefined' && chrs.length >= chrBands.length / 2) {
       ideo.coordinateSystem = 'bp';
     }
 
@@ -12235,13 +12276,7 @@ function initDrawChromosomes(bandsArray) {
       ideo.chromosomes[taxid][chromosome] = chrModel;
       ideo.chromosomesArray.push(chrModel);
 
-      if (
-        'sex' in ideo.config &&
-        (
-          ploidy === 2 && ideo.sexChromosomes.index + 2 === chrIndex ||
-          ideo.config.sex === 'female' && chrModel.name === 'Y'
-        )
-      ) {
+      if ('sex' in ideo.config && (ploidy === 2 && ideo.sexChromosomes.index + 2 === chrIndex || ideo.config.sex === 'female' && chrModel.name === 'Y')) {
         continue;
       }
 
@@ -12249,18 +12284,9 @@ function initDrawChromosomes(bandsArray) {
       chrSetNumber += 1;
 
       // Append chromosome set container
-      var container = d3.select(ideo.selector)
-        .append('g')
-        .attr('class', 'chromosome-set-container')
-        .attr('data-set-number', j)
-        .attr('transform', transform)
-        .attr('id', chrModel.id + '-chromosome-set');
+      var container = d3.select(ideo.selector).append('g').attr('class', 'chromosome-set-container').attr('data-set-number', j).attr('transform', transform).attr('id', chrModel.id + '-chromosome-set');
 
-      if (
-        'sex' in ideo.config &&
-        ploidy === 2 &&
-        ideo.sexChromosomes.index + 1 === chrIndex
-      ) {
+      if ('sex' in ideo.config && ploidy === 2 && ideo.sexChromosomes.index + 1 === chrIndex) {
         ideo.drawSexChromosomes(bandsArray, taxid, container, defs, j, chrs);
         continue;
       }
@@ -12274,15 +12300,9 @@ function initDrawChromosomes(bandsArray) {
         shape = ideo.drawChromosome(chrModel, chrIndex - 1, container, k);
       }
 
-      defs.append('clipPath')
-        .attr('id', chrModel.id + '-chromosome-set-clippath')
-        .selectAll('path')
-        .data(shape)
-        .enter()
-        .append('path')
-        .attr('d', function(d) {
-          return d.path;
-        }).attr('class', function(d) {
+      defs.append('clipPath').attr('id', chrModel.id + '-chromosome-set-clippath').selectAll('path').data(shape).enter().append('path').attr('d', function (d) {
+        return d.path;
+      }).attr('class', function (d) {
         return d.class;
       });
     }
@@ -12316,14 +12336,14 @@ function init() {
   var t0 = new Date().getTime();
 
   var bandsArray = [],
-    numBandDataResponses = 0,
-    resolution = this.config.resolution,
-    accession;
+      numBandDataResponses = 0,
+      resolution = this.config.resolution,
+      accession;
 
-  var promise = new __WEBPACK_IMPORTED_MODULE_2_es6_promise__["Promise"](function(resolve) {
+  var promise = new __WEBPACK_IMPORTED_MODULE_2_es6_promise__["Promise"](function (resolve) {
     if (typeof ideo.config.organism === 'number') {
       // 'organism' is a taxid, e.g. 9606
-      ideo.getOrganismFromEutils(function() {
+      ideo.getOrganismFromEutils(function () {
         ideo.getTaxids(resolve);
       });
     } else {
@@ -12331,13 +12351,12 @@ function init() {
     }
   });
 
-  promise.then(function(taxids) {
+  promise.then(function (taxids) {
     taxid = taxids[0];
     ideo.config.taxid = taxid;
     ideo.config.taxids = taxids;
 
-    var assemblies,
-      bandFileName;
+    var assemblies, bandFileName;
 
     var bandDataFileNames = {
       9606: '',
@@ -12359,18 +12378,11 @@ function init() {
       }
 
       bandFileName = [];
-      bandFileName.push(
-        Ideogram.slugify(ideo.organisms[taxid].scientificName)
-      );
+      bandFileName.push(Ideogram.slugify(ideo.organisms[taxid].scientificName));
       if (accession !== assemblies.default) {
         bandFileName.push(accession);
       }
-      if (
-        taxid === '9606' &&
-        (accession in assemblies === 'false' &&
-          Object.values(assemblies).indexOf(ideo.config.assembly) === -1 ||
-          (resolution !== '' && resolution !== 850))
-      ) {
+      if (taxid === '9606' && (accession in assemblies === 'false' && Object.values(assemblies).indexOf(ideo.config.assembly) === -1 || resolution !== '' && resolution !== 850)) {
         bandFileName.push(resolution);
       }
       bandFileName = bandFileName.join('-') + '.js';
@@ -12379,29 +12391,23 @@ function init() {
         bandDataFileNames[taxid] = bandFileName;
       }
 
-      if (
-        typeof accession !== 'undefined' &&
-        /GCA_/.test(ideo.config.assembly) === false &&
-        typeof chrBands === 'undefined' && taxid in bandDataFileNames
-      ) {
-        d3.request(ideo.config.dataDir + bandDataFileNames[taxid])
-          .on('beforesend', function(data) {
-            // Ensures correct taxid is processed in response callback; using
-            // simply 'taxid' variable gives the last *requested* taxid, which
-            // fails when dealing with multiple taxa.
-            data.taxid = taxid;
-          })
-          .get(function(error, data) {
-            eval(data.response);
+      if (typeof accession !== 'undefined' && /GCA_/.test(ideo.config.assembly) === false && typeof chrBands === 'undefined' && taxid in bandDataFileNames) {
+        d3.request(ideo.config.dataDir + bandDataFileNames[taxid]).on('beforesend', function (data) {
+          // Ensures correct taxid is processed in response callback; using
+          // simply 'taxid' variable gives the last *requested* taxid, which
+          // fails when dealing with multiple taxa.
+          data.taxid = taxid;
+        }).get(function (error, data) {
+          eval(data.response);
 
-            ideo.bandData[data.taxid] = chrBands;
-            numBandDataResponses += 1;
+          ideo.bandData[data.taxid] = chrBands;
+          numBandDataResponses += 1;
 
-            if (numBandDataResponses === taxids.length) {
-              bandsArray = ideo.processBandData();
-              writeContainer();
-            }
-          });
+          if (numBandDataResponses === taxids.length) {
+            bandsArray = ideo.processBandData();
+            writeContainer();
+          }
+        });
       } else {
         if (typeof chrBands !== 'undefined') {
           // If bands already available,
@@ -12427,10 +12433,7 @@ function init() {
     // array format.  String ploidyDesc is used when depicting e.g. parental
     // origin each member of chromosome pair in a human genome.
     // See ploidy_basic.html for usage example.
-    if (
-      'ploidyDesc' in ideo.config &&
-      typeof ideo.config.ploidyDesc === 'string'
-    ) {
+    if ('ploidyDesc' in ideo.config && typeof ideo.config.ploidyDesc === 'string') {
       var tmp = [];
       for (var i = 0; i < ideo.numChromosomes; i++) {
         tmp.push(ideo.config.ploidyDesc);
@@ -12452,10 +12455,7 @@ function init() {
       }
     }
 
-    if (
-      ideo.config.annotationsLayout &&
-      ideo.config.annotationsLayout === 'overlay'
-    ) {
+    if (ideo.config.annotationsLayout && ideo.config.annotationsLayout === 'overlay') {
       svgClass += 'faint';
     }
 
@@ -12463,19 +12463,10 @@ function init() {
     var svgWidth = ideo._layout.getWidth(taxid);
     var svgHeight = ideo._layout.getHeight(taxid);
 
-    d3.select(ideo.config.container)
-      .append('div')
-      .append('svg')
-      .attr('id', '_ideogram')
-      .attr('class', svgClass)
-      .attr('width', svgWidth)
-      .attr('height', svgHeight)
-      .html(gradients);
+    d3.select(ideo.config.container).append('div').append('svg').attr('id', '_ideogram').attr('class', svgClass).attr('width', svgWidth).attr('height', svgHeight).html(gradients);
 
     //JIM
-    d3.select(ideo.config.container).append("div")
-      .attr("class", "tooltip")
-      .style("opacity", 0);
+    d3.select(ideo.config.container).append("div").attr("class", "tooltip").style("opacity", 0);
 
     finishInit();
   }
@@ -12497,7 +12488,7 @@ function init() {
       // Waits for potentially large annotation dataset
       // to be received by the client, then triggers annotation processing
       if (ideo.config.annotationsPath) {
-        function pa() {
+        var pa = function pa() {
           if (typeof ideo.timeout !== 'undefined') {
             window.clearTimeout(ideo.timeout);
           }
@@ -12508,21 +12499,19 @@ function init() {
           if (typeof crossfilter !== 'undefined' && ideo.initCrossFilter) {
             ideo.initCrossFilter();
           }
-        }
+        };
 
         if (ideo.rawAnnots) {
           pa();
         } else {
           (function checkAnnotData() {
-            ideo.timeout = setTimeout(function() {
-                if (!ideo.rawAnnots) {
-                  checkAnnotData();
-                } else {
-                  pa();
-                }
-              },
-              50
-            );
+            ideo.timeout = setTimeout(function () {
+              if (!ideo.rawAnnots) {
+                checkAnnotData();
+              } else {
+                pa();
+              }
+            }, 50);
           })();
         }
       }
@@ -12537,8 +12526,7 @@ function init() {
         // Hiding all bands, then QSA'ing and displaying the
         // relatively few bands that are shown.
         var t0C = new Date().getTime();
-        d3.selectAll(ideo.selector + ' .bandLabel, .bandLabelStalk')
-          .style('display', 'none');
+        d3.selectAll(ideo.selector + ' .bandLabel, .bandLabelStalk').style('display', 'none');
         d3.selectAll(bandsToShow).style('display', '');
         var t1C = new Date().getTime();
         if (ideo.config.debug) {
@@ -12577,12 +12565,11 @@ function init() {
       }
 
       if (!('rotatable' in ideo.config && ideo.config.rotatable === false)) {
-        d3.selectAll(ideo.selector + ' .chromosome').on('click', function() {
+        d3.selectAll(ideo.selector + ' .chromosome').on('click', function () {
           ideo.rotateAndToggleDisplay(this);
         });
       } else {
-        d3.selectAll(ideo.selector + ' .chromosome')
-          .style('cursor', 'default');
+        d3.selectAll(ideo.selector + ' .chromosome').style('cursor', 'default');
       }
 
       if (ideo.onLoadCallback) {
@@ -12594,7 +12581,6 @@ function init() {
     }
   }
 }
-
 
 
 
@@ -12826,8 +12812,20 @@ module.exports = g;
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return Layout; });
+/* unused harmony export HorizontalLayout */
+/* unused harmony export PairedLayout */
+/* unused harmony export SmallLayout */
+/* unused harmony export VerticalLayout */
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_d3_selection__ = __webpack_require__(0);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__views_chromosome_util__ = __webpack_require__(251);
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
 // import {VerticalLayout} from './vertical-layout';
 // import {HorizontalLayout} from './horizontal-layout';
@@ -12840,9 +12838,10 @@ var d3 = Object.assign({}, __WEBPACK_IMPORTED_MODULE_0_d3_selection__);
 
 
 
-class Layout {
+var Layout = function () {
+  function Layout(config, ideo) {
+    _classCallCheck(this, Layout);
 
-  constructor(config, ideo) {
     this._config = config;
     this._ideo = ideo;
     this._ploidy = this._ideo._ploidy;
@@ -12852,7 +12851,7 @@ class Layout {
       this.chrSetMargin = config.chrSetMargin;
     } else {
       var k = this._config.chrMargin;
-      this.chrSetMargin = (this._config.ploidy > 1 ? k : 0);
+      this.chrSetMargin = this._config.ploidy > 1 ? k : 0;
     }
 
     // Chromosome band's size.
@@ -12863,560 +12862,576 @@ class Layout {
   }
 
   // Factory method
-  static getInstance(config, ideo) {
-    if ('perspective' in config && config.perspective === 'comparative') {
-      return new PairedLayout(config, ideo);
-    } else if ('rows' in config && config.rows > 1) {
-      return new SmallLayout(config, ideo);
-    } else if (config.orientation === 'vertical') {
-      return new VerticalLayout(config, ideo);
-    } else if (config.orientation === 'horizontal') {
-      return new HorizontalLayout(config, ideo);
-    } else {
-      return new VerticalLayout(config, ideo);
+
+
+  _createClass(Layout, [{
+    key: '_getLeftMargin',
+
+
+    // Get chart left margin
+    value: function _getLeftMargin() {
+      return this._margin.left;
     }
-  }
 
-  // Get chart left margin
-  _getLeftMargin() {
-    return this._margin.left;
-  }
+    // Get rotated chromosome y scale
 
-  // Get rotated chromosome y scale
-  _getYScale() {
-    // 20 is width of rotated chromosome.
-    return 20 / this._config.chrWidth;
-  }
+  }, {
+    key: '_getYScale',
+    value: function _getYScale() {
+      // 20 is width of rotated chromosome.
+      return 20 / this._config.chrWidth;
+    }
 
-  // Get chromosome labels
-  getChromosomeLabels(chrElement) {
-    var util = new __WEBPACK_IMPORTED_MODULE_1__views_chromosome_util__["a" /* ChromosomeUtil */](chrElement);
+    // Get chromosome labels
 
-    return [util.getSetLabel(), util.getLabel()].filter(function(d) {
-      return d.length > 0;
-    });
-  }
+  }, {
+    key: 'getChromosomeLabels',
+    value: function getChromosomeLabels(chrElement) {
+      var util = new __WEBPACK_IMPORTED_MODULE_1__views_chromosome_util__["a" /* ChromosomeUtil */](chrElement);
 
-  // Rotate chromosome to original position
-  rotateBack() {
-    throw new Error(this._class + '#rotateBack not implemented');
-  }
+      return [util.getSetLabel(), util.getLabel()].filter(function (d) {
+        return d.length > 0;
+      });
+    }
 
-  // Rotate chromosome to opposite position
-  rotateForward() {
-    throw new Error(this._class + '#rotateForward not implemented');
-  }
+    // Rotate chromosome to original position
 
-  rotate(chrSetNumber, chrNumber, chrElement) {
-    var ideo = this._ideo;
+  }, {
+    key: 'rotateBack',
+    value: function rotateBack() {
+      throw new Error(this._class + '#rotateBack not implemented');
+    }
 
-    // Find chromosomes which should be hidden
-    var otherChrs = d3.selectAll(ideo.selector + ' g.chromosome')
-      .filter(function() {
+    // Rotate chromosome to opposite position
+
+  }, {
+    key: 'rotateForward',
+    value: function rotateForward() {
+      throw new Error(this._class + '#rotateForward not implemented');
+    }
+  }, {
+    key: 'rotate',
+    value: function rotate(chrSetNumber, chrNumber, chrElement) {
+      var ideo = this._ideo;
+
+      // Find chromosomes which should be hidden
+      var otherChrs = d3.selectAll(ideo.selector + ' g.chromosome').filter(function () {
         return this !== chrElement;
       });
 
-    if (this._isRotated) {
-      // Reset _isRotated flag
-      this._isRotated = false;
+      if (this._isRotated) {
+        // Reset _isRotated flag
+        this._isRotated = false;
 
-      // Rotate chromosome back
-      this.rotateBack(chrSetNumber, chrNumber, chrElement, function() {
-        // Show all other chromosomes and chromosome labels
-        otherChrs.style('display', null);
-        d3.selectAll(ideo.selector + ' .chrSetLabel, .chrLabel')
-          .style('display', null);
-      });
-    } else {
-      // Set _isRotated flag
-      this._isRotated = true;
+        // Rotate chromosome back
+        this.rotateBack(chrSetNumber, chrNumber, chrElement, function () {
+          // Show all other chromosomes and chromosome labels
+          otherChrs.style('display', null);
+          d3.selectAll(ideo.selector + ' .chrSetLabel, .chrLabel').style('display', null);
+        });
+      } else {
+        // Set _isRotated flag
+        this._isRotated = true;
 
-      // Hide all other chromosomes and chromosome labels
-      otherChrs.style('display', 'none');
-      d3.selectAll(ideo.selector + ' .chrSetLabel, .chrLabel')
-        .style('display', 'none');
+        // Hide all other chromosomes and chromosome labels
+        otherChrs.style('display', 'none');
+        d3.selectAll(ideo.selector + ' .chrSetLabel, .chrLabel').style('display', 'none');
 
-      // Rotate chromosome
-      this.rotateForward(chrSetNumber, chrNumber, chrElement);
+        // Rotate chromosome
+        this.rotateForward(chrSetNumber, chrNumber, chrElement);
+      }
     }
-  }
-
-  getChromosomeLabelClass() {
-    if (this._config.ploidy === 1) {
-      return 'chrLabel';
-    } else {
-      return 'chrSetLabel';
+  }, {
+    key: 'getChromosomeLabelClass',
+    value: function getChromosomeLabelClass() {
+      if (this._config.ploidy === 1) {
+        return 'chrLabel';
+      } else {
+        return 'chrSetLabel';
+      }
     }
-  }
-
-  _getAdditionalOffset() {
-    return (
-      (this._config.annotationHeight || 0) * (this._config.numAnnotTracks || 1)
-    );
-  }
-
-  _getChromosomeSetSize(chrSetNumber) {
-    // Get last chromosome set size.
-    var setSize = this._ploidy.getSetSize(chrSetNumber);
-
-    // Increase offset by last chromosome set size
-    return (
-      setSize * this._config.chrWidth * 2 + (this.chrSetMargin)
-    );
-  }
-
-  // Get layout margin
-  getMargin() {
-    return this._margin;
-  }
-  //
-  // // Get SVG element height
-  // getHeight() {
-  //   throw new Error(this._class + '#getHeight not implemented');
-  // }
-  //
-  // getChromosomeBandTickY1() {
-  //   throw new Error(this._class + '#getChromosomeBandTickY1 not implemented');
-  // }
-  //
-  // getChromosomeBandTickY2() {
-  //   throw new Error(this._class + '#getChromosomeBandTickY2 not implemented');
-  // }
-  //
-  // // Get chromosome's band translate attribute
-  // getChromosomeBandLabelTranslate() {
-  //   throw new Error(
-  //     this._class + '#getChromosomeBandLabelTranslate not implemented'
-  //   );
-  // }
-
-  // Get chromosome set label anchor property
-  getChromosomeSetLabelAnchor() {
-    return 'middle';
-  }
-  //
-  // // Get chromosome's band label text-anchor value
-  // getChromosomeBandLabelAnchor() {
-  //   throw (
-  //     new Error(this._class + '#getChromosomeBandLabelAnchor not implemented')
-  //   );
-  // }
-  //
-  // getChromosomeLabelXPosition() {
-  //   throw new Error(
-  //     this._class + '#getChromosomeLabelXPosition not implemented'
-  //   );
-  // }
-
-  // Get chromosome label y position.
-  getChromosomeLabelYPosition() {
-    return -5.5;
-  }
-
-  // "i" is chromosome number
-  getChromosomeSetLabelYPosition(i) {
-    if (this._config.ploidy === 1) {
-      return this.getChromosomeLabelYPosition(i);
-    } else {
-      return -2 * this._config.chrWidth;
+  }, {
+    key: '_getAdditionalOffset',
+    value: function _getAdditionalOffset() {
+      return (this._config.annotationHeight || 0) * (this._config.numAnnotTracks || 1);
     }
-  }
+  }, {
+    key: '_getChromosomeSetSize',
+    value: function _getChromosomeSetSize(chrSetNumber) {
+      // Get last chromosome set size.
+      var setSize = this._ploidy.getSetSize(chrSetNumber);
 
-  // getChromosomeSetLabelXPosition() {
-  //   throw (
-  //     new Error(
-  //       this._class + '#getChromosomeSetLabelXPosition not implemented'
-  //     )
-  //   );
-  // }
-  //
-  // getChromosomeSetLabelTranslate() {
-  //   throw (
-  //     new Error(this._class + '#getChromosomeSetLabelTranslate not implemented')
-  //   );
-  // }
-  //
-  // // Get chromosome set translate attribute
-  // getChromosomeSetTranslate() {
-  //   throw new Error(this._class + '#getChromosomeSetTranslate not implemented');
-  // }
-  //
-  // // Get chromosome set translate's y offset
-  // getChromosomeSetYTranslate() {
-  //   throw new Error(
-  //     this._class + '#getChromosomeSetYTranslate not implemented'
-  //   );
-  // }
-}
-/* harmony export (immutable) */ __webpack_exports__["a"] = Layout;
-
-
-class HorizontalLayout extends Layout {
-
-  constructor(config, ideo) {
-    super(config, ideo);
-    this._class = 'HorizontalLayout';
-    this._margin = {
-      left: 20,
-      top: 30
-    };
-  }
-
-  _getLeftMargin() {
-    var margin = Layout.prototype._getLeftMargin.call(this);
-    if (this._config.ploidy > 1) {
-      margin *= 1.8;
+      // Increase offset by last chromosome set size
+      return setSize * this._config.chrWidth * 2 + this.chrSetMargin;
     }
 
-    return margin;
-  }
+    // Get layout margin
 
-  rotateForward(setNumber, chrNumber, chrElement, callback) {
-    var xOffset = 30;
+  }, {
+    key: 'getMargin',
+    value: function getMargin() {
+      return this._margin;
+    }
+    //
+    // // Get SVG element height
+    // getHeight() {
+    //   throw new Error(this._class + '#getHeight not implemented');
+    // }
+    //
+    // getChromosomeBandTickY1() {
+    //   throw new Error(this._class + '#getChromosomeBandTickY1 not implemented');
+    // }
+    //
+    // getChromosomeBandTickY2() {
+    //   throw new Error(this._class + '#getChromosomeBandTickY2 not implemented');
+    // }
+    //
+    // // Get chromosome's band translate attribute
+    // getChromosomeBandLabelTranslate() {
+    //   throw new Error(
+    //     this._class + '#getChromosomeBandLabelTranslate not implemented'
+    //   );
+    // }
 
-    var ideoBox = d3.select(this._ideo.selector).node().getBoundingClientRect();
-    var chrBox = chrElement.getBoundingClientRect();
+    // Get chromosome set label anchor property
 
-    var scaleX = (ideoBox.height / (chrBox.width + xOffset / 2)) * 0.9;
-    var scaleY = this._getYScale();
+  }, {
+    key: 'getChromosomeSetLabelAnchor',
+    value: function getChromosomeSetLabelAnchor() {
+      return 'middle';
+    }
+    //
+    // // Get chromosome's band label text-anchor value
+    // getChromosomeBandLabelAnchor() {
+    //   throw (
+    //     new Error(this._class + '#getChromosomeBandLabelAnchor not implemented')
+    //   );
+    // }
+    //
+    // getChromosomeLabelXPosition() {
+    //   throw new Error(
+    //     this._class + '#getChromosomeLabelXPosition not implemented'
+    //   );
+    // }
 
-    var yOffset = (chrNumber + 1) * ((this._config.chrWidth * 2) * scaleY);
+    // Get chromosome label y position.
 
-    var transform = (
-      'rotate(90) ' +
-      'translate(' + xOffset + ', -' + yOffset + ') ' +
-      'scale(' + scaleX + ', ' + scaleY + ')'
-    );
-
-    d3.select(chrElement.parentNode)
-      .transition()
-      .attr("transform", transform)
-      .on('end', callback);
-
-    // Append new chromosome labels
-    var labels = this.getChromosomeLabels(chrElement);
-    d3.select(this._ideo.getSvg())
-      .append('g')
-      .attr('class', 'tmp')
-      .selectAll('text')
-      .data(labels)
-      .enter()
-      .append('text')
-      .attr('class', function(d, i) {
-        return i === 0 && labels.length === 2 ? 'chrSetLabel' : null;
-      })
-      .attr('x', 30)
-      .attr('y', function(d, i) {
-        return (i + 1 + labels.length % 2) * 12;
-      })
-      .style('text-anchor', 'middle')
-      .style('opacity', 0)
-      .text(String)
-      .transition()
-      .style('opacity', 1);
-  }
-
-  rotateBack(setNumber, chrNumber, chrElement, callback) {
-    var translate = this.getChromosomeSetTranslate(setNumber);
-
-    d3.select(chrElement.parentNode)
-      .transition()
-      .attr("transform", translate)
-      .on('end', callback);
-
-    d3.selectAll(this._ideo.selector + ' g.tmp')
-      .style('opacity', 0)
-      .remove();
-  }
-
-  getHeight(taxId) {
-    // Get last chromosome set offset.
-    var numChromosomes = this._config.chromosomes[taxId].length;
-    var lastSetOffset = this.getChromosomeSetYTranslate(numChromosomes - 1);
-
-    // Get last chromosome set size.
-    var lastSetSize = this._getChromosomeSetSize(numChromosomes - 1);
-
-    // Increase offset by last chromosome set size
-    lastSetOffset += lastSetSize;
-
-    return lastSetOffset + this._getAdditionalOffset() * 2;
-  }
-
-  getWidth() {
-    return this._config.chrHeight + this._margin.top * 1.5;
-  }
-
-  getChromosomeSetLabelAnchor() {
-    return 'end';
-  }
-
-  getChromosomeBandLabelAnchor() {
-    return null;
-  }
-
-  getChromosomeBandTickY1() {
-    return 2;
-  }
-
-  getChromosomeBandTickY2() {
-    return 10;
-  }
-
-  getChromosomeBandLabelTranslate(band) {
-    var x =
-      this._ideo.round(-this._tickSize + band.px.start + band.px.width / 2);
-    var y = -10;
-
-    return {
-      x: x,
-      y: y,
-      translate: 'translate(' + x + ',' + y + ')'
-    };
-  }
-
-  getChromosomeSetLabelTranslate() {
-    return null;
-  }
-
-  getChromosomeSetTranslate(setNumber) {
-    var leftMargin = this._getLeftMargin();
-    var chromosomeSetYTranslate = this.getChromosomeSetYTranslate(setNumber);
-    return 'translate(' + leftMargin + ', ' + chromosomeSetYTranslate + ')';
-  }
-
-  getChromosomeSetYTranslate(setNumber) {
-    // If no detailed description provided just use one formula for all cases.
-    if (!this._config.ploidyDesc) {
-      return this._config.chrMargin * (setNumber + 1);
+  }, {
+    key: 'getChromosomeLabelYPosition',
+    value: function getChromosomeLabelYPosition() {
+      return -5.5;
     }
 
-    // Id detailed description provided start to calculate offsets
-    //  for each chromosome set separately. This should be done only once.
-    if (!this._translate) {
-      // First offset equals to zero.
-      this._translate = [1];
+    // "i" is chromosome number
 
-      // Loop through description set
-      for (var i = 1; i < this._config.ploidyDesc.length; i++) {
-        this._translate[i] =
-          this._translate[i - 1] + this._getChromosomeSetSize(i - 1);
+  }, {
+    key: 'getChromosomeSetLabelYPosition',
+    value: function getChromosomeSetLabelYPosition(i) {
+      if (this._config.ploidy === 1) {
+        return this.getChromosomeLabelYPosition(i);
+      } else {
+        return -2 * this._config.chrWidth;
       }
     }
 
-    return this._translate[setNumber];
-  }
+    // getChromosomeSetLabelXPosition() {
+    //   throw (
+    //     new Error(
+    //       this._class + '#getChromosomeSetLabelXPosition not implemented'
+    //     )
+    //   );
+    // }
+    //
+    // getChromosomeSetLabelTranslate() {
+    //   throw (
+    //     new Error(this._class + '#getChromosomeSetLabelTranslate not implemented')
+    //   );
+    // }
+    //
+    // // Get chromosome set translate attribute
+    // getChromosomeSetTranslate() {
+    //   throw new Error(this._class + '#getChromosomeSetTranslate not implemented');
+    // }
+    //
+    // // Get chromosome set translate's y offset
+    // getChromosomeSetYTranslate() {
+    //   throw new Error(
+    //     this._class + '#getChromosomeSetYTranslate not implemented'
+    //   );
+    // }
 
-  getChromosomeSetLabelXPosition(i) {
-    if (this._config.ploidy === 1) {
-      return this.getChromosomeLabelXPosition(i);
-    } else {
-      return -20;
+  }], [{
+    key: 'getInstance',
+    value: function getInstance(config, ideo) {
+      if ('perspective' in config && config.perspective === 'comparative') {
+        return new PairedLayout(config, ideo);
+      } else if ('rows' in config && config.rows > 1) {
+        return new SmallLayout(config, ideo);
+      } else if (config.orientation === 'vertical') {
+        return new VerticalLayout(config, ideo);
+      } else if (config.orientation === 'horizontal') {
+        return new HorizontalLayout(config, ideo);
+      } else {
+        return new VerticalLayout(config, ideo);
+      }
     }
+  }]);
+
+  return Layout;
+}();
+
+var HorizontalLayout = function (_Layout) {
+  _inherits(HorizontalLayout, _Layout);
+
+  function HorizontalLayout(config, ideo) {
+    _classCallCheck(this, HorizontalLayout);
+
+    var _this = _possibleConstructorReturn(this, (HorizontalLayout.__proto__ || Object.getPrototypeOf(HorizontalLayout)).call(this, config, ideo));
+
+    _this._class = 'HorizontalLayout';
+    _this._margin = {
+      left: 20,
+      top: 30
+    };
+    return _this;
   }
 
-  getChromosomeSetLabelYPosition(i) {
-    var setSize = this._ploidy.getSetSize(i),
-      config = this._config,
-      chrMargin = config.chrMargin,
-      chrWidth = config.chrWidth,
-      y;
+  _createClass(HorizontalLayout, [{
+    key: '_getLeftMargin',
+    value: function _getLeftMargin() {
+      var margin = Layout.prototype._getLeftMargin.call(this);
+      if (this._config.ploidy > 1) {
+        margin *= 1.8;
+      }
 
-    if (config.ploidy === 1) {
-      y = chrWidth / 2 + 3;
-    } else {
-      y = (setSize * chrMargin) / 2;
+      return margin;
     }
+  }, {
+    key: 'rotateForward',
+    value: function rotateForward(setNumber, chrNumber, chrElement, callback) {
+      var xOffset = 30;
 
-    return y;
-  }
+      var ideoBox = d3.select(this._ideo.selector).node().getBoundingClientRect();
+      var chrBox = chrElement.getBoundingClientRect();
 
-  getChromosomeLabelXPosition() {
-    return -8;
-  }
+      var scaleX = ideoBox.height / (chrBox.width + xOffset / 2) * 0.9;
+      var scaleY = this._getYScale();
 
-  getChromosomeLabelYPosition() {
-    return this._config.chrWidth;
-  }
+      var yOffset = (chrNumber + 1) * (this._config.chrWidth * 2 * scaleY);
 
-}
-/* unused harmony export HorizontalLayout */
+      var transform = 'rotate(90) ' + 'translate(' + xOffset + ', -' + yOffset + ') ' + 'scale(' + scaleX + ', ' + scaleY + ')';
 
+      d3.select(chrElement.parentNode).transition().attr("transform", transform).on('end', callback);
 
-class PairedLayout extends Layout {
+      // Append new chromosome labels
+      var labels = this.getChromosomeLabels(chrElement);
+      d3.select(this._ideo.getSvg()).append('g').attr('class', 'tmp').selectAll('text').data(labels).enter().append('text').attr('class', function (d, i) {
+        return i === 0 && labels.length === 2 ? 'chrSetLabel' : null;
+      }).attr('x', 30).attr('y', function (d, i) {
+        return (i + 1 + labels.length % 2) * 12;
+      }).style('text-anchor', 'middle').style('opacity', 0).text(String).transition().style('opacity', 1);
+    }
+  }, {
+    key: 'rotateBack',
+    value: function rotateBack(setNumber, chrNumber, chrElement, callback) {
+      var translate = this.getChromosomeSetTranslate(setNumber);
 
-  constructor(config, ideo) {
-    super(config, ideo);
+      d3.select(chrElement.parentNode).transition().attr("transform", translate).on('end', callback);
 
-    this._class = 'PairedLayout';
+      d3.selectAll(this._ideo.selector + ' g.tmp').style('opacity', 0).remove();
+    }
+  }, {
+    key: 'getHeight',
+    value: function getHeight(taxId) {
+      // Get last chromosome set offset.
+      var numChromosomes = this._config.chromosomes[taxId].length;
+      var lastSetOffset = this.getChromosomeSetYTranslate(numChromosomes - 1);
 
-    this._margin = {
+      // Get last chromosome set size.
+      var lastSetSize = this._getChromosomeSetSize(numChromosomes - 1);
+
+      // Increase offset by last chromosome set size
+      lastSetOffset += lastSetSize;
+
+      return lastSetOffset + this._getAdditionalOffset() * 2;
+    }
+  }, {
+    key: 'getWidth',
+    value: function getWidth() {
+      return this._config.chrHeight + this._margin.top * 1.5;
+    }
+  }, {
+    key: 'getChromosomeSetLabelAnchor',
+    value: function getChromosomeSetLabelAnchor() {
+      return 'end';
+    }
+  }, {
+    key: 'getChromosomeBandLabelAnchor',
+    value: function getChromosomeBandLabelAnchor() {
+      return null;
+    }
+  }, {
+    key: 'getChromosomeBandTickY1',
+    value: function getChromosomeBandTickY1() {
+      return 2;
+    }
+  }, {
+    key: 'getChromosomeBandTickY2',
+    value: function getChromosomeBandTickY2() {
+      return 10;
+    }
+  }, {
+    key: 'getChromosomeBandLabelTranslate',
+    value: function getChromosomeBandLabelTranslate(band) {
+      var x = this._ideo.round(-this._tickSize + band.px.start + band.px.width / 2);
+      var y = -10;
+
+      return {
+        x: x,
+        y: y,
+        translate: 'translate(' + x + ',' + y + ')'
+      };
+    }
+  }, {
+    key: 'getChromosomeSetLabelTranslate',
+    value: function getChromosomeSetLabelTranslate() {
+      return null;
+    }
+  }, {
+    key: 'getChromosomeSetTranslate',
+    value: function getChromosomeSetTranslate(setNumber) {
+      var leftMargin = this._getLeftMargin();
+      var chromosomeSetYTranslate = this.getChromosomeSetYTranslate(setNumber);
+      return 'translate(' + leftMargin + ', ' + chromosomeSetYTranslate + ')';
+    }
+  }, {
+    key: 'getChromosomeSetYTranslate',
+    value: function getChromosomeSetYTranslate(setNumber) {
+      // If no detailed description provided just use one formula for all cases.
+      if (!this._config.ploidyDesc) {
+        return this._config.chrMargin * (setNumber + 1);
+      }
+
+      // Id detailed description provided start to calculate offsets
+      //  for each chromosome set separately. This should be done only once.
+      if (!this._translate) {
+        // First offset equals to zero.
+        this._translate = [1];
+
+        // Loop through description set
+        for (var i = 1; i < this._config.ploidyDesc.length; i++) {
+          this._translate[i] = this._translate[i - 1] + this._getChromosomeSetSize(i - 1);
+        }
+      }
+
+      return this._translate[setNumber];
+    }
+  }, {
+    key: 'getChromosomeSetLabelXPosition',
+    value: function getChromosomeSetLabelXPosition(i) {
+      if (this._config.ploidy === 1) {
+        return this.getChromosomeLabelXPosition(i);
+      } else {
+        return -20;
+      }
+    }
+  }, {
+    key: 'getChromosomeSetLabelYPosition',
+    value: function getChromosomeSetLabelYPosition(i) {
+      var setSize = this._ploidy.getSetSize(i),
+          config = this._config,
+          chrMargin = config.chrMargin,
+          chrWidth = config.chrWidth,
+          y;
+
+      if (config.ploidy === 1) {
+        y = chrWidth / 2 + 3;
+      } else {
+        y = setSize * chrMargin / 2;
+      }
+
+      return y;
+    }
+  }, {
+    key: 'getChromosomeLabelXPosition',
+    value: function getChromosomeLabelXPosition() {
+      return -8;
+    }
+  }, {
+    key: 'getChromosomeLabelYPosition',
+    value: function getChromosomeLabelYPosition() {
+      return this._config.chrWidth;
+    }
+  }]);
+
+  return HorizontalLayout;
+}(Layout);
+
+var PairedLayout = function (_Layout2) {
+  _inherits(PairedLayout, _Layout2);
+
+  function PairedLayout(config, ideo) {
+    _classCallCheck(this, PairedLayout);
+
+    var _this2 = _possibleConstructorReturn(this, (PairedLayout.__proto__ || Object.getPrototypeOf(PairedLayout)).call(this, config, ideo));
+
+    _this2._class = 'PairedLayout';
+
+    _this2._margin = {
       left: 30
     };
+    return _this2;
   }
 
-  rotateForward(setNumber, chrNumber, chrElement, callback) {
-    var self = this;
-    var ideo = this._ideo;
+  _createClass(PairedLayout, [{
+    key: 'rotateForward',
+    value: function rotateForward(setNumber, chrNumber, chrElement, callback) {
+      var self = this;
+      var ideo = this._ideo;
 
-    // Get ideo container and chromosome set dimensions
-    var ideoBox = d3.select(ideo.selector).node().getBoundingClientRect();
-    var chrBox = chrElement.getBoundingClientRect();
+      // Get ideo container and chromosome set dimensions
+      var ideoBox = d3.select(ideo.selector).node().getBoundingClientRect();
+      var chrBox = chrElement.getBoundingClientRect();
 
-    // Evaluate dimensions scale coefficients
-    var scaleX = (ideoBox.width / chrBox.height) * 0.97;
-    var scaleY = this._getYScale();
+      // Evaluate dimensions scale coefficients
+      var scaleX = ideoBox.width / chrBox.height * 0.97;
+      var scaleY = this._getYScale();
 
-    // Evaluate y offset of chromosome.
-    // It is different for first and the second one
-    var yOffset = setNumber ? 150 : 25;
+      // Evaluate y offset of chromosome.
+      // It is different for first and the second one
+      var yOffset = setNumber ? 150 : 25;
 
-    var transform =
-      'translate(15, ' + yOffset + ') scale(' + scaleX + ', ' + scaleY + ')';
+      var transform = 'translate(15, ' + yOffset + ') scale(' + scaleX + ', ' + scaleY + ')';
 
-    // Run rotation procedure
-    d3.select(chrElement.parentNode)
-      .transition()
-      .attr("transform", transform)
-      .on('end', function() {
+      // Run rotation procedure
+      d3.select(chrElement.parentNode).transition().attr("transform", transform).on('end', function () {
         // Run callback function if provided
         if (callback) {
           callback();
         }
 
-        var translateY = (6 * Number(!setNumber));
+        var translateY = 6 * Number(!setNumber);
 
         // Rotate band labels
-        d3.select(chrElement.parentNode).selectAll('g.bandLabel text')
-          .attr('transform', 'rotate(90) translate(0, ' + translateY + ')')
-          .attr('text-anchor', 'middle');
+        d3.select(chrElement.parentNode).selectAll('g.bandLabel text').attr('transform', 'rotate(90) translate(0, ' + translateY + ')').attr('text-anchor', 'middle');
 
         // Hide syntenic regions
-        d3.selectAll(ideo.selector + ' .syntenicRegion')
-          .style('display', 'none');
+        d3.selectAll(ideo.selector + ' .syntenicRegion').style('display', 'none');
       });
 
-    // Append new chromosome labels
-    var labels = this.getChromosomeLabels(chrElement);
+      // Append new chromosome labels
+      var labels = this.getChromosomeLabels(chrElement);
 
-    d3.select(this._ideo.getSvg())
-      .append('g')
-      .attr('class', 'tmp')
-      .selectAll('text')
-      .data(this.getChromosomeLabels(chrElement))
-      .enter()
-      .append('text')
-      .attr('class', function(d, i) {
+      d3.select(this._ideo.getSvg()).append('g').attr('class', 'tmp').selectAll('text').data(this.getChromosomeLabels(chrElement)).enter().append('text').attr('class', function (d, i) {
         return i === 0 && labels.length === 2 ? 'chrSetLabel' : null;
-      })
-      .attr('x', 0)
-      .attr('y', yOffset + (self._config.chrWidth * scaleX / 2) * 1.15)
-      .style('opacity', 0)
-      .text(String)
-      .transition()
-      .style('opacity', 1);
-  }
+      }).attr('x', 0).attr('y', yOffset + self._config.chrWidth * scaleX / 2 * 1.15).style('opacity', 0).text(String).transition().style('opacity', 1);
+    }
+  }, {
+    key: 'rotateBack',
+    value: function rotateBack(setNumber, chrNumber, chrElement, callback) {
+      var ideo = this._ideo;
 
-  rotateBack(setNumber, chrNumber, chrElement, callback) {
-    var ideo = this._ideo;
+      // Get intial transformation string for chromosome set
+      var translate = this.getChromosomeSetTranslate(setNumber);
 
-    // Get intial transformation string for chromosome set
-    var translate = this.getChromosomeSetTranslate(setNumber);
-
-    // Run rotation procedure
-    d3.select(chrElement.parentNode)
-      .transition()
-      .attr('transform', translate)
-      .on('end', function() {
+      // Run rotation procedure
+      d3.select(chrElement.parentNode).transition().attr('transform', translate).on('end', function () {
         // Run callback fnuction if provided
         callback();
 
         // Show syntenic regions
-        d3.selectAll(ideo.select + ' .syntenicRegion')
-          .style('display', null);
+        d3.selectAll(ideo.select + ' .syntenicRegion').style('display', null);
 
         // Reset changed attributes to original state
-        d3.select(chrElement.parentNode).selectAll('g.bandLabel text')
-          .attr('transform', null)
-          .attr('text-anchor', setNumber ? null : 'end');
+        d3.select(chrElement.parentNode).selectAll('g.bandLabel text').attr('transform', null).attr('text-anchor', setNumber ? null : 'end');
       });
 
-    d3.selectAll(ideo.selector + ' g.tmp')
-      .style('opacity', 0)
-      .remove();
-  }
+      d3.selectAll(ideo.selector + ' g.tmp').style('opacity', 0).remove();
+    }
+  }, {
+    key: 'getHeight',
+    value: function getHeight() {
+      return this._config.chrHeight + this._margin.left * 1.5;
+    }
+  }, {
+    key: 'getWidth',
+    value: function getWidth() {
+      return '97%';
+    }
+  }, {
+    key: 'getChromosomeBandTickY1',
+    value: function getChromosomeBandTickY1(chrNumber) {
+      return chrNumber % 2 ? this._config.chrWidth : this._config.chrWidth * 2;
+    }
+  }, {
+    key: 'getChromosomeBandTickY2',
+    value: function getChromosomeBandTickY2(chrNumber) {
+      var width = this._config.chrWidth;
+      return chrNumber % 2 ? width - this._tickSize : width * 2 + this._tickSize;
+    }
+  }, {
+    key: 'getChromosomeBandLabelAnchor',
+    value: function getChromosomeBandLabelAnchor(chrNumber) {
+      return chrNumber % 2 ? null : 'end';
+    }
+  }, {
+    key: 'getChromosomeBandLabelTranslate',
+    value: function getChromosomeBandLabelTranslate(band, chrNumber) {
+      var x = chrNumber % 2 ? 10 : -this._config.chrWidth - 10;
+      var y = this._ideo.round(band.px.start + band.px.width / 2) + 3;
 
-  getHeight() {
-    return this._config.chrHeight + this._margin.left * 1.5;
-  }
+      return {
+        x: y,
+        y: y,
+        translate: 'rotate(-90) translate(' + x + ', ' + y + ')'
+      };
+    }
+  }, {
+    key: 'getChromosomeLabelXPosition',
+    value: function getChromosomeLabelXPosition() {
+      return -this._tickSize;
+    }
+  }, {
+    key: 'getChromosomeSetLabelXPosition',
+    value: function getChromosomeSetLabelXPosition() {
+      return this._config.chrWidth / -2;
+    }
+  }, {
+    key: 'getChromosomeSetLabelTranslate',
+    value: function getChromosomeSetLabelTranslate() {
+      return 'rotate(-90)';
+    }
+  }, {
+    key: 'getChromosomeSetTranslate',
+    value: function getChromosomeSetTranslate(setNumber) {
+      var chromosomeSetYTranslate = this.getChromosomeSetYTranslate(setNumber);
+      return 'rotate(90) ' + 'translate(' + this._margin.left + ', -' + chromosomeSetYTranslate + ')';
+    }
+  }, {
+    key: 'getChromosomeSetYTranslate',
+    value: function getChromosomeSetYTranslate(setNumber) {
+      return 200 * (setNumber + 1);
+    }
+  }]);
 
-  getWidth() {
-    return '97%';
-  }
+  return PairedLayout;
+}(Layout);
 
-  getChromosomeBandTickY1(chrNumber) {
-    return chrNumber % 2 ? this._config.chrWidth : this._config.chrWidth * 2;
-  }
+var SmallLayout = function (_Layout3) {
+  _inherits(SmallLayout, _Layout3);
 
-  getChromosomeBandTickY2(chrNumber) {
-    var width = this._config.chrWidth;
-    return chrNumber % 2 ? width - this._tickSize : width * 2 + this._tickSize;
-  }
+  function SmallLayout(config, ideo) {
+    _classCallCheck(this, SmallLayout);
 
-  getChromosomeBandLabelAnchor(chrNumber) {
-    return chrNumber % 2 ? null : 'end';
-  }
+    var _this3 = _possibleConstructorReturn(this, (SmallLayout.__proto__ || Object.getPrototypeOf(SmallLayout)).call(this, config, ideo));
 
-  getChromosomeBandLabelTranslate(band, chrNumber) {
-    var x = chrNumber % 2 ? 10 : -this._config.chrWidth - 10;
-    var y = this._ideo.round(band.px.start + band.px.width / 2) + 3;
+    _this3._class = 'SmallLayout';
 
-    return {
-      x: y,
-      y: y,
-      translate: 'rotate(-90) translate(' + x + ', ' + y + ')'
-    };
-  }
-
-  getChromosomeLabelXPosition() {
-    return -this._tickSize;
-  }
-
-  getChromosomeSetLabelXPosition() {
-    return this._config.chrWidth / -2;
-  }
-
-  getChromosomeSetLabelTranslate() {
-    return 'rotate(-90)';
-  }
-
-  getChromosomeSetTranslate(setNumber) {
-    var chromosomeSetYTranslate = this.getChromosomeSetYTranslate(setNumber);
-    return (
-      'rotate(90) ' +
-      'translate(' + this._margin.left + ', -' + chromosomeSetYTranslate + ')'
-    );
-  }
-
-  getChromosomeSetYTranslate(setNumber) {
-    return 200 * (setNumber + 1);
-  }
-
-}
-/* unused harmony export PairedLayout */
-
-
-class SmallLayout extends Layout {
-
-  constructor(config, ideo) {
-    super(config, ideo);
-
-    this._class = 'SmallLayout';
-
-    this._margin = {
+    _this3._margin = {
       left: 36.5,
       top: 10
     };
+    return _this3;
   }
 
   // rotateForward(setNumber, chrNumber, chrElement, callback) {
@@ -13443,229 +13458,222 @@ class SmallLayout extends Layout {
   //     .on('end', callback);
   // }
 
-  getHeight() {
-    var chrHeight = this._config.chrHeight;
-    return this._config.rows * (chrHeight + this._margin.top * 1.5);
-  }
-
-  getWidth() {
-    return '97%';
-  }
-
-  getChromosomeBandLabelTranslate() {
-
-  }
-
-  getChromosomeSetLabelTranslate() {
-    return 'rotate(-90)';
-  }
-
-  getChromosomeSetTranslate(setNumber) {
-    // Get organisms id list
-    var organisms = [];
-    this._ideo.getTaxids(function(taxIdList) {
-      organisms = taxIdList;
-    });
-    // Get first organism chromosomes amount
-    var size = this._ideo.config.chromosomes[organisms[0]].length;
-    // Amount of chromosomes per number
-    var rowSize = size / this._config.rows;
-
-    var xOffset;
-    var yOffset;
-
-    if (setNumber > rowSize - 1) {
-      xOffset = this._margin.left + this._config.chrHeight * 1.4;
-      yOffset = this.getChromosomeSetYTranslate(setNumber - rowSize);
-    } else {
-      xOffset = this._margin.left;
-      yOffset = this.getChromosomeSetYTranslate(setNumber);
+  _createClass(SmallLayout, [{
+    key: 'getHeight',
+    value: function getHeight() {
+      var chrHeight = this._config.chrHeight;
+      return this._config.rows * (chrHeight + this._margin.top * 1.5);
     }
+  }, {
+    key: 'getWidth',
+    value: function getWidth() {
+      return '97%';
+    }
+  }, {
+    key: 'getChromosomeBandLabelTranslate',
+    value: function getChromosomeBandLabelTranslate() {}
+  }, {
+    key: 'getChromosomeSetLabelTranslate',
+    value: function getChromosomeSetLabelTranslate() {
+      return 'rotate(-90)';
+    }
+  }, {
+    key: 'getChromosomeSetTranslate',
+    value: function getChromosomeSetTranslate(setNumber) {
+      // Get organisms id list
+      var organisms = [];
+      this._ideo.getTaxids(function (taxIdList) {
+        organisms = taxIdList;
+      });
+      // Get first organism chromosomes amount
+      var size = this._ideo.config.chromosomes[organisms[0]].length;
+      // Amount of chromosomes per number
+      var rowSize = size / this._config.rows;
 
-    return 'rotate(90) translate(' + xOffset + ', -' + yOffset + ')';
-  }
+      var xOffset;
+      var yOffset;
 
-  getChromosomeSetYTranslate(setNumber) {
-    // Get additional padding caused by annotation tracks
-    var additionalPadding = this._getAdditionalOffset();
-    // If no detailed description provided just use one formula for all cases
-    return (
-      this._margin.left * (setNumber) + this._config.chrWidth +
-      additionalPadding * 2 + additionalPadding * setNumber
-    );
-  }
+      if (setNumber > rowSize - 1) {
+        xOffset = this._margin.left + this._config.chrHeight * 1.4;
+        yOffset = this.getChromosomeSetYTranslate(setNumber - rowSize);
+      } else {
+        xOffset = this._margin.left;
+        yOffset = this.getChromosomeSetYTranslate(setNumber);
+      }
 
-  getChromosomeSetLabelXPosition(setNumber) {
-    return (
-      ((this._ploidy.getSetSize(setNumber) * this._config.chrWidth + 20) / -2) +
-      (this._config.ploidy > 1 ? 0 : this._config.chrWidth)
-    );
-  }
+      return 'rotate(90) translate(' + xOffset + ', -' + yOffset + ')';
+    }
+  }, {
+    key: 'getChromosomeSetYTranslate',
+    value: function getChromosomeSetYTranslate(setNumber) {
+      // Get additional padding caused by annotation tracks
+      var additionalPadding = this._getAdditionalOffset();
+      // If no detailed description provided just use one formula for all cases
+      return this._margin.left * setNumber + this._config.chrWidth + additionalPadding * 2 + additionalPadding * setNumber;
+    }
+  }, {
+    key: 'getChromosomeSetLabelXPosition',
+    value: function getChromosomeSetLabelXPosition(setNumber) {
+      return (this._ploidy.getSetSize(setNumber) * this._config.chrWidth + 20) / -2 + (this._config.ploidy > 1 ? 0 : this._config.chrWidth);
+    }
+  }, {
+    key: 'getChromosomeLabelXPosition',
+    value: function getChromosomeLabelXPosition() {
+      return this._config.chrWidth / -2;
+    }
+  }]);
 
-  getChromosomeLabelXPosition() {
-    return this._config.chrWidth / -2;
-  }
+  return SmallLayout;
+}(Layout);
 
-}
-/* unused harmony export SmallLayout */
+var VerticalLayout = function (_Layout4) {
+  _inherits(VerticalLayout, _Layout4);
 
+  function VerticalLayout(config, ideo) {
+    _classCallCheck(this, VerticalLayout);
 
+    var _this4 = _possibleConstructorReturn(this, (VerticalLayout.__proto__ || Object.getPrototypeOf(VerticalLayout)).call(this, config, ideo));
 
-
-
-class VerticalLayout extends Layout {
-
-  constructor(config, ideo) {
-    super(config, ideo);
-    this._class = 'VerticalLayout';
+    _this4._class = 'VerticalLayout';
     // Layout margins
-    this._margin = {
+    _this4._margin = {
       top: 30,
       left: 15
     };
+    return _this4;
   }
 
-  rotateForward(setNumber, chrNumber, chrElement, callback) {
-    var self = this;
+  _createClass(VerticalLayout, [{
+    key: 'rotateForward',
+    value: function rotateForward(setNumber, chrNumber, chrElement, callback) {
+      var self = this;
 
-    var xOffset = 20;
+      var xOffset = 20;
 
-    var ideoBox = d3.select(this._ideo.selector).node().getBoundingClientRect();
-    var chrBox = chrElement.getBoundingClientRect();
+      var ideoBox = d3.select(this._ideo.selector).node().getBoundingClientRect();
+      var chrBox = chrElement.getBoundingClientRect();
 
-    var scaleX = (ideoBox.width / chrBox.height) * 0.97;
-    var scaleY = this._getYScale();
+      var scaleX = ideoBox.width / chrBox.height * 0.97;
+      var scaleY = this._getYScale();
 
-    var transform =
-      'translate(' + xOffset + ', 25) scale(' + scaleX + ', ' + scaleY + ')';
+      var transform = 'translate(' + xOffset + ', 25) scale(' + scaleX + ', ' + scaleY + ')';
 
-    d3.select(chrElement.parentNode)
-      .transition()
-      .attr('transform', transform)
-      .on('end', callback);
+      d3.select(chrElement.parentNode).transition().attr('transform', transform).on('end', callback);
 
-    // Append new chromosome labels
-    var labels = this.getChromosomeLabels(chrElement);
-    var y = (xOffset + self._config.chrWidth) * 1.3;
-    d3.select(this._ideo.getSvg())
-      .append('g')
-      .attr('class', 'tmp')
-      .selectAll('text')
-      .data(labels)
-      .enter()
-      .append('text')
-      .attr('class', function(d, i) {
+      // Append new chromosome labels
+      var labels = this.getChromosomeLabels(chrElement);
+      var y = (xOffset + self._config.chrWidth) * 1.3;
+      d3.select(this._ideo.getSvg()).append('g').attr('class', 'tmp').selectAll('text').data(labels).enter().append('text').attr('class', function (d, i) {
         return i === 0 && labels.length === 2 ? 'chrSetLabel' : null;
-      })
-      .attr('x', 0)
-      .attr('y', y).style('opacity', 0)
-      .text(String)
-      .transition()
-      .style('opacity', 1);
-  }
+      }).attr('x', 0).attr('y', y).style('opacity', 0).text(String).transition().style('opacity', 1);
+    }
+  }, {
+    key: 'rotateBack',
+    value: function rotateBack(setNumber, chrNumber, chrElement, callback) {
+      var translate = this.getChromosomeSetTranslate(setNumber);
 
-  rotateBack(setNumber, chrNumber, chrElement, callback) {
-    var translate = this.getChromosomeSetTranslate(setNumber);
+      d3.select(chrElement.parentNode).transition().attr('transform', translate).on('end', callback);
 
-    d3.select(chrElement.parentNode)
-      .transition()
-      .attr('transform', translate)
-      .on('end', callback);
+      d3.selectAll(this._ideo.selector + ' g.tmp').style('opacity', 0).remove();
+    }
+  }, {
+    key: 'getHeight',
+    value: function getHeight() {
+      return this._config.chrHeight + this._margin.top * 1.5;
+    }
+  }, {
+    key: 'getWidth',
+    value: function getWidth() {
+      return '97%';
+    }
+  }, {
+    key: 'getChromosomeBandLabelTranslate',
+    value: function getChromosomeBandLabelTranslate() {}
+  }, {
+    key: 'getChromosomeSetLabelTranslate',
+    value: function getChromosomeSetLabelTranslate() {
+      return 'rotate(-90)';
+    }
+  }, {
+    key: 'getChromosomeSetTranslate',
+    value: function getChromosomeSetTranslate(setNumber) {
+      var marginTop = this._margin.top;
+      var chromosomeSetYTranslate = this.getChromosomeSetYTranslate(setNumber);
+      return 'rotate(90) ' + 'translate(' + marginTop + ', -' + chromosomeSetYTranslate + ')';
+    }
+  }, {
+    key: 'getChromosomeSetYTranslate',
+    value: function getChromosomeSetYTranslate(setNumber) {
+      // Get additional padding caused by annotation/histogram tracks
+      var pad = this._getAdditionalOffset(),
+          margin = this._config.chrMargin,
+          width = this._config.chrWidth,
+          translate;
 
-    d3.selectAll(this._ideo.selector + ' g.tmp')
-      .style('opacity', 0)
-      .remove();
-  }
+      // If no detailed description provided just use one formula for all cases
+      if (!this._config.ploidyDesc) {
+        // TODO:
+        // This part of code contains a lot magic numbers and if
+        // statements for exactly corresponing to original ideogram examples.
+        // But all this stuff should be removed. Calculation of translate
+        // should be a simple formula applied for all cases listed below.
+        // Now they are diffirent because of Layout:_getAdditionalOffset do
+        // not meet for cases when no annotation, when annotation exists and
+        // when histogram used
 
-  getHeight() {
-    return this._config.chrHeight + this._margin.top * 1.5;
-  }
-
-  getWidth() {
-    return '97%';
-  }
-
-  getChromosomeBandLabelTranslate() {
-
-  }
-
-  getChromosomeSetLabelTranslate() {
-    return 'rotate(-90)';
-  }
-
-  getChromosomeSetTranslate(setNumber) {
-    var marginTop = this._margin.top;
-    var chromosomeSetYTranslate = this.getChromosomeSetYTranslate(setNumber);
-    return (
-      'rotate(90) ' +
-      'translate(' + marginTop + ', -' + chromosomeSetYTranslate + ')'
-    );
-  }
-
-  getChromosomeSetYTranslate(setNumber) {
-    // Get additional padding caused by annotation/histogram tracks
-    var pad = this._getAdditionalOffset(),
-      margin = this._config.chrMargin,
-      width = this._config.chrWidth,
-      translate;
-
-    // If no detailed description provided just use one formula for all cases
-    if (!this._config.ploidyDesc) {
-      // TODO:
-      // This part of code contains a lot magic numbers and if
-      // statements for exactly corresponing to original ideogram examples.
-      // But all this stuff should be removed. Calculation of translate
-      // should be a simple formula applied for all cases listed below.
-      // Now they are diffirent because of Layout:_getAdditionalOffset do
-      // not meet for cases when no annotation, when annotation exists and
-      // when histogram used
-
-      if (this._config.annotationsLayout === 'histogram') {
-        return margin / 2 + setNumber * (margin + width + 2) + pad * 2 + 1;
-      } else {
-        translate = width + setNumber * (margin + width) + pad * 2;
-        if (pad > 0) {
-          return translate;
+        if (this._config.annotationsLayout === 'histogram') {
+          return margin / 2 + setNumber * (margin + width + 2) + pad * 2 + 1;
         } else {
-          return translate + 4 + (2 * setNumber);
+          translate = width + setNumber * (margin + width) + pad * 2;
+          if (pad > 0) {
+            return translate;
+          } else {
+            return translate + 4 + 2 * setNumber;
+          }
         }
       }
-    }
 
-    // If detailed description provided start to calculate offsets
-    // for each chromosome set separately. This should be done only once
-    if (!this._translate) {
-      // First offset equals to zero
-      this._translate = [this._ploidy.getSetSize(0) * width * 2];
-      var prevTranslate;
-      // Loop through description set
-      for (var i = 1; i < this._config.ploidyDesc.length; i++) {
-        prevTranslate = this._translate[i - 1];
-        this._translate[i] = prevTranslate + this._getChromosomeSetSize(i - 1);
+      // If detailed description provided start to calculate offsets
+      // for each chromosome set separately. This should be done only once
+      if (!this._translate) {
+        // First offset equals to zero
+        this._translate = [this._ploidy.getSetSize(0) * width * 2];
+        var prevTranslate;
+        // Loop through description set
+        for (var i = 1; i < this._config.ploidyDesc.length; i++) {
+          prevTranslate = this._translate[i - 1];
+          this._translate[i] = prevTranslate + this._getChromosomeSetSize(i - 1);
+        }
       }
+
+      return this._translate[setNumber];
     }
+  }, {
+    key: 'getChromosomeSetLabelXPosition',
+    value: function getChromosomeSetLabelXPosition() {
+      return this._config.chrWidth * this._config.ploidy / -2;
+    }
+  }, {
+    key: 'getChromosomeLabelXPosition',
+    value: function getChromosomeLabelXPosition() {
+      return this._config.chrWidth / -2;
+    }
+  }]);
 
-    return this._translate[setNumber];
-  }
-
-  getChromosomeSetLabelXPosition() {
-    return (this._config.chrWidth * this._config.ploidy) / -2;
-  }
-
-  getChromosomeLabelXPosition() {
-    return this._config.chrWidth / -2;
-  }
-}
-/* unused harmony export VerticalLayout */
-
-
+  return VerticalLayout;
+}(Layout);
 
 /***/ }),
 /* 251 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return ChromosomeUtil; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_d3_selection__ = __webpack_require__(0);
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
 
 
 var d3 = Object.assign({}, __WEBPACK_IMPORTED_MODULE_0_d3_selection__);
@@ -13673,36 +13681,34 @@ var d3 = Object.assign({}, __WEBPACK_IMPORTED_MODULE_0_d3_selection__);
 /**
  * Chromosome's view utility class
  */
-class ChromosomeUtil {
+var ChromosomeUtil = function () {
+  function ChromosomeUtil(node) {
+    _classCallCheck(this, ChromosomeUtil);
 
-  constructor(node) {
     this._node = node;
   }
 
-  getLabel() {
-    var label =
-      d3
-        .select(this._node)
-        .select('text.chrLabel')
-        .text();
-    return label;
-  }
+  _createClass(ChromosomeUtil, [{
+    key: 'getLabel',
+    value: function getLabel() {
+      var label = d3.select(this._node).select('text.chrLabel').text();
+      return label;
+    }
 
-  /**
-   * Get chromosome set label
-   */
-  getSetLabel() {
-    var setLabel =
-      d3
-        .select(this._node.parentNode)
-        .select('text.chromosome-set-label')
-        .text();
-    return setLabel;
-  }
-}
-/* harmony export (immutable) */ __webpack_exports__["a"] = ChromosomeUtil;
+    /**
+     * Get chromosome set label
+     */
 
+  }, {
+    key: 'getSetLabel',
+    value: function getSetLabel() {
+      var setLabel = d3.select(this._node.parentNode).select('text.chromosome-set-label').text();
+      return setLabel;
+    }
+  }]);
 
+  return ChromosomeUtil;
+}();
 
 /***/ }),
 /* 252 */
@@ -13762,12 +13768,21 @@ function onDrawAnnots() {
  */
 function processAnnotData(rawAnnots) {
   var keys,
-    i, j, k, m, annot, annots, annotsByChr,
-    chr,
-    chrModel, ra,
-    startPx, stopPx, px,
-    color,
-    ideo = this;
+      i,
+      j,
+      k,
+      m,
+      annot,
+      annots,
+      annotsByChr,
+      chr,
+      chrModel,
+      ra,
+      startPx,
+      stopPx,
+      px,
+      color,
+      ideo = this;
 
   keys = rawAnnots.keys;
   rawAnnots = rawAnnots.annots;
@@ -13783,15 +13798,12 @@ function processAnnotData(rawAnnots) {
     chrModel = ideo.chromosomes[ideo.config.taxid][chr];
 
     if (typeof chrModel === 'undefined') {
-      console.warn(
-        'Chromosome "' + chr + '" undefined in ideogram; ' +
-        annotsByChr.annots.length + ' annotations not shown'
-      );
+      console.warn('Chromosome "' + chr + '" undefined in ideogram; ' + annotsByChr.annots.length + ' annotations not shown');
       continue;
     }
 
     m++;
-    annots.push({chr: annotsByChr.chr, annots: []});
+    annots.push({ chr: annotsByChr.chr, annots: [] });
 
     for (j = 0; j < annotsByChr.annots.length; j++) {
       ra = annotsByChr.annots[j];
@@ -13838,11 +13850,7 @@ function processAnnotData(rawAnnots) {
  * Initializes various annotation settings.  Constructor help function.
  */
 function initAnnotSettings() {
-  if (
-    this.config.annotationsPath ||
-    this.config.localAnnotationsPath ||
-    this.annots || this.config.annotations
-  ) {
+  if (this.config.annotationsPath || this.config.localAnnotationsPath || this.annots || this.config.annotations) {
     if (!this.config.annotationHeight) {
       var annotHeight = Math.round(this.config.chrHeight / 100);
       this.config.annotationHeight = annotHeight;
@@ -13853,8 +13861,7 @@ function initAnnotSettings() {
     } else {
       this.config.numAnnotTracks = 1;
     }
-    this.config.annotTracksHeight =
-      this.config.annotationHeight * this.config.numAnnotTracks;
+    this.config.annotTracksHeight = this.config.annotationHeight * this.config.numAnnotTracks;
 
     if (typeof this.config.barWidth === 'undefined') {
       this.config.barWidth = 3;
@@ -13879,12 +13886,9 @@ function fetchAnnots(annotsUrl) {
   var ideo = this;
 
   if (annotsUrl.slice(0, 4) !== 'http') {
-    d3.json(
-      ideo.config.annotationsPath,
-      function(data) {
-        ideo.rawAnnots = data;
-      }
-    );
+    d3.json(ideo.config.annotationsPath, function (data) {
+      ideo.rawAnnots = data;
+    });
     return;
   }
 
@@ -13893,21 +13897,17 @@ function fetchAnnots(annotsUrl) {
 
   if (extension !== 'bed' && extension !== 'json') {
     extension = extension.toUpperCase();
-    alert(
-      'This Ideogram.js only supports BED and native format at the ' +
-      'moment.  Sorry, check back soon for ' + extension + ' support!'
-    );
+    alert('This Ideogram.js only supports BED and native format at the ' + 'moment.  Sorry, check back soon for ' + extension + ' support!');
     return;
   }
 
-  d3.request(annotsUrl, function(data) {
+  d3.request(annotsUrl, function (data) {
     if (extension === 'bed') {
       ideo.rawAnnots = new __WEBPACK_IMPORTED_MODULE_4__parsers_bed_parser__["a" /* BedParser */](data.response, ideo).rawAnnots;
     } else {
       ideo.rawAnnots = JSON.parse(data.response);
     }
   });
-
 }
 
 /**
@@ -13915,11 +13915,14 @@ function fetchAnnots(annotsUrl) {
  */
 function drawAnnots(friendlyAnnots) {
   var ideo = this,
-    i, j, annot,
-    rawAnnots = [],
-    rawAnnot, keys,
-    chr,
-    chrs = ideo.chromosomes[ideo.config.taxid]; // TODO: multiorganism
+      i,
+      j,
+      annot,
+      rawAnnots = [],
+      rawAnnot,
+      keys,
+      chr,
+      chrs = ideo.chromosomes[ideo.config.taxid]; // TODO: multiorganism
 
   // Occurs when filtering
   if ('annots' in friendlyAnnots[0]) {
@@ -13927,7 +13930,7 @@ function drawAnnots(friendlyAnnots) {
   }
 
   for (chr in chrs) {
-    rawAnnots.push({chr: chr, annots: []});
+    rawAnnots.push({ chr: chr, annots: [] });
   }
 
   for (i = 0; i < friendlyAnnots.length; i++) {
@@ -13935,11 +13938,7 @@ function drawAnnots(friendlyAnnots) {
 
     for (j = 0; j < rawAnnots.length; j++) {
       if (annot.chr === rawAnnots[j].chr) {
-        rawAnnot = [
-          annot.name,
-          annot.start,
-          annot.stop - annot.start
-        ];
+        rawAnnot = [annot.name, annot.start, annot.stop - annot.start];
         if ('color' in annot) {
           rawAnnot.push(annot.color);
         }
@@ -13959,7 +13958,7 @@ function drawAnnots(friendlyAnnots) {
   if ('shape' in friendlyAnnots[0]) {
     keys.push('shape');
   }
-  ideo.rawAnnots = {keys: keys, annots: rawAnnots};
+  ideo.rawAnnots = { keys: keys, annots: rawAnnots };
 
   ideo.annots = ideo.processAnnotData(ideo.rawAnnots);
 
@@ -13972,15 +13971,33 @@ function drawAnnots(friendlyAnnots) {
 function getHistogramBars(annots) {
   var t0 = new Date().getTime();
 
-  var i, j, chr,
-    chrModel, chrModels, chrPxStop, px, bp,
-    chrAnnots, chrName, chrIndex, annot,
-    bars, bar, barPx, nextBarPx, barWidth,
-    maxAnnotsPerBar, color, lastBand,
-    numBins, barAnnots, barCount, height,
-    firstGet = false,
-    histogramScaling,
-    ideo = this;
+  var i,
+      j,
+      chr,
+      chrModel,
+      chrModels,
+      chrPxStop,
+      px,
+      bp,
+      chrAnnots,
+      chrName,
+      chrIndex,
+      annot,
+      bars,
+      bar,
+      barPx,
+      nextBarPx,
+      barWidth,
+      maxAnnotsPerBar,
+      color,
+      lastBand,
+      numBins,
+      barAnnots,
+      barCount,
+      height,
+      firstGet = false,
+      histogramScaling,
+      ideo = this;
 
   bars = [];
 
@@ -14005,7 +14022,7 @@ function getHistogramBars(annots) {
     lastBand = chrModel.bands[chrModel.bands.length - 1];
     chrPxStop = lastBand.px.stop;
     numBins = Math.round(chrPxStop / barWidth);
-    bar = {chr: chr, annots: []};
+    bar = { chr: chr, annots: [] };
     for (i = 0; i < numBins; i++) {
       px = i * barWidth - ideo.bump;
       bp = ideo.convertPxToBp(chrModel, px + ideo.bump);
@@ -14066,7 +14083,7 @@ function getHistogramBars(annots) {
     annots = bars[i].annots;
     for (j = 0; j < annots.length; j++) {
       barCount = annots[j].count;
-      height = (barCount / ideo.maxAnnotsPerBar[chr]) * ideo.config.chrMargin;
+      height = barCount / ideo.maxAnnotsPerBar[chr] * ideo.config.chrMargin;
       // console.log(height)
       bars[i].annots[j].height = height;
     }
@@ -14097,7 +14114,7 @@ function fillAnnots(annots) {
   for (i = 0; i < chrArray.length; i++) {
     chr = chrArray[i].name;
     chrs.push(chr);
-    filledAnnots.push({chr: chr, annots: []});
+    filledAnnots.push({ chr: chr, annots: [] });
   }
 
   for (i = 0; i < annots.length; i++) {
@@ -14118,11 +14135,19 @@ function fillAnnots(annots) {
  * running parallel to each chromosome.
  */
 function drawProcessedAnnots(annots) {
-  var chrWidth, layout,
-    annotHeight, triangle, circle, r, chrAnnot,
-    x1, x2, y1, y2,
-    filledAnnots,
-    ideo = this;
+  var chrWidth,
+      layout,
+      annotHeight,
+      triangle,
+      circle,
+      r,
+      chrAnnot,
+      x1,
+      x2,
+      y1,
+      y2,
+      filledAnnots,
+      ideo = this;
 
   chrWidth = this.config.chrWidth;
 
@@ -14137,133 +14162,89 @@ function drawProcessedAnnots(annots) {
 
   annotHeight = ideo.config.annotationHeight;
 
-  triangle =
-    'l -' + annotHeight + ' ' +
-    (2 * annotHeight) +
-    ' l ' + (2 * annotHeight) + ' 0 z';
+  triangle = 'l -' + annotHeight + ' ' + 2 * annotHeight + ' l ' + 2 * annotHeight + ' 0 z';
 
   // From http://stackoverflow.com/a/10477334, with a minor change ("m -r, r")
   // Circles are supported natively via <circle>, but having it as a path
   // simplifies handling triangles, circles and other shapes in the same
   // D3 call
   r = annotHeight;
-  circle =
-    'm -' + r + ', ' + r +
-    'a ' + r + ',' + r + ' 0 1,0 ' + (r * 2) + ',0' +
-    'a ' + r + ',' + r + ' 0 1,0 -' + (r * 2) + ',0';
+  circle = 'm -' + r + ', ' + r + 'a ' + r + ',' + r + ' 0 1,0 ' + r * 2 + ',0' + 'a ' + r + ',' + r + ' 0 1,0 -' + r * 2 + ',0';
 
   filledAnnots = ideo.fillAnnots(annots);
 
-  chrAnnot = d3.selectAll(ideo.selector + ' .chromosome')
-    .data(filledAnnots)
-    .selectAll('path.annot')
-    .data(function(d) {
-      return d.annots;
-    })
-    .enter();
+  chrAnnot = d3.selectAll(ideo.selector + ' .chromosome').data(filledAnnots).selectAll('path.annot').data(function (d) {
+    return d.annots;
+  }).enter();
 
   if (layout === 'tracks') {
-    chrAnnot
-      .append('g')
-      .attr('id', function(d) {
-        return d.id;
-      })
-      .attr('class', 'annot')
-      .attr('transform', function(d) {
-        var y = ideo.config.chrWidth + (d.trackIndex * annotHeight * 2);
-        return 'translate(' + d.px + ',' + y + ')';
-      })
-      .append('path')
-      .attr('d', function(d) {
-        if (!d.shape || d.shape === 'triangle') {
-          return 'm0,0' + triangle;
-        } else if (d.shape === 'circle') {
-          return circle;
-        }
-      })
-      //JIM
-      .on("mouseover", function(d) {		
-        d3.select(".tooltip").transition()		
-          .duration(200)		
-          .style("opacity", .9);
-        var matrix = this.getScreenCTM()
-            .translate(+this.getAttribute("cx"),
-                     +this.getAttribute("cy"));
-        d3.select(".tooltip").html((d.name) + "<br/>"  + (d.start) + "-" + (d.stop) + "<br/>"  + (matrix.e))	
-                .style("left", (window.pageXOffset + matrix.e) + "px")		
-                .style("top", (window.pageYOffset + matrix.f - 28) + "px");	
-        })
-      .on("mouseout", function(d) {		
-        d3.select(".tooltip").transition()		
-          .duration(500)		
-          .style("opacity", 0);	
-        })
-
-      .attr('fill', function(d) {
-        return d.color;
-      });
+    chrAnnot.append('g').attr('id', function (d) {
+      return d.id;
+    }).attr('class', 'annot').attr('transform', function (d) {
+      var y = ideo.config.chrWidth + d.trackIndex * annotHeight * 2;
+      return 'translate(' + d.px + ',' + y + ')';
+    }).append('path').attr('d', function (d) {
+      if (!d.shape || d.shape === 'triangle') {
+        return 'm0,0' + triangle;
+      } else if (d.shape === 'circle') {
+        return circle;
+      }
+    })
+    //JIM
+    .on("mouseover", function (d) {
+      d3.select(".tooltip").transition().duration(200).style("opacity", .9);
+      var matrix = this.getScreenCTM().translate(+this.getAttribute("cx"), +this.getAttribute("cy"));
+      d3.select(".tooltip").html(d.name + "<br/>" + d.start + "-" + d.stop + "<br/>" + matrix.e).style("left", window.pageXOffset + matrix.e + "px").style("top", window.pageYOffset + matrix.f - 28 + "px");
+    }).on("mouseout", function (d) {
+      d3.select(".tooltip").transition().duration(500).style("opacity", 0);
+    }).attr('fill', function (d) {
+      return d.color;
+    });
   } else if (layout === 'overlay') {
     // Overlaid annotations appear directly on chromosomes
 
-    chrAnnot.append('polygon')
-      .attr('id', function(d) {
-        return d.id;
-      })
-      .attr('class', 'annot')
-      .attr('points', function(d) {
-        if (d.stopPx - d.startPx > 1) {
-          x1 = d.startPx;
-          x2 = d.stopPx;
-        } else {
-          x1 = d.px - 0.5;
-          x2 = d.px + 0.5;
-        }
-        y1 = chrWidth;
-        y2 = 0;
+    chrAnnot.append('polygon').attr('id', function (d) {
+      return d.id;
+    }).attr('class', 'annot').attr('points', function (d) {
+      if (d.stopPx - d.startPx > 1) {
+        x1 = d.startPx;
+        x2 = d.stopPx;
+      } else {
+        x1 = d.px - 0.5;
+        x2 = d.px + 0.5;
+      }
+      y1 = chrWidth;
+      y2 = 0;
 
-        return (
-          x1 + ',' + y1 + ' ' +
-          x2 + ',' + y1 + ' ' +
-          x2 + ',' + y2 + ' ' +
-          x1 + ',' + y2
-        );
-      })
-      .attr('fill', function(d) {
-        return d.color;
-      });
+      return x1 + ',' + y1 + ' ' + x2 + ',' + y1 + ' ' + x2 + ',' + y2 + ' ' + x1 + ',' + y2;
+    }).attr('fill', function (d) {
+      return d.color;
+    });
   } else if (layout === 'histogram') {
     chrAnnot.append('polygon')
     // .attr('id', function(d, i) { return d.id; })
-      .attr('class', 'annot')
-      .attr('points', function(d) {
-        x1 = d.px + ideo.bump;
-        x2 = d.px + ideo.config.barWidth + ideo.bump;
-        y1 = chrWidth;
-        y2 = chrWidth + d.height;
+    .attr('class', 'annot').attr('points', function (d) {
+      x1 = d.px + ideo.bump;
+      x2 = d.px + ideo.config.barWidth + ideo.bump;
+      y1 = chrWidth;
+      y2 = chrWidth + d.height;
 
-        var thisChrWidth = ideo.chromosomesArray[d.chrIndex - 1].width;
+      var thisChrWidth = ideo.chromosomesArray[d.chrIndex - 1].width;
 
-        if (x2 > thisChrWidth) {
-          x2 = thisChrWidth;
-        }
+      if (x2 > thisChrWidth) {
+        x2 = thisChrWidth;
+      }
 
-        return (
-          x1 + ',' + y1 + ' ' +
-          x2 + ',' + y1 + ' ' +
-          x2 + ',' + y2 + ' ' +
-          x1 + ',' + y2
-        );
-      })
-      .attr('fill', function(d) {
-        return d.color;
-      });
+      return x1 + ',' + y1 + ' ' + x2 + ',' + y1 + ' ' + x2 + ',' + y2 + ' ' + x1 + ',' + y2;
+    }).attr('fill', function (d) {
+      return d.color;
+    });
   }
 
   if (ideo.onDrawAnnotsCallback) {
     ideo.onDrawAnnotsCallback();
   }
 }
-
 
 /**
  * Draws a trapezoid connecting a genomic range on
@@ -14273,15 +14254,18 @@ function drawProcessedAnnots(annots) {
 function drawSynteny(syntenicRegions) {
   var t0 = new Date().getTime();
 
-  var r1, r2,
-    syntenies,
-    i, color, opacity,
-    regionID, regions, syntenicRegion,
-    ideo = this;
+  var r1,
+      r2,
+      syntenies,
+      i,
+      color,
+      opacity,
+      regionID,
+      regions,
+      syntenicRegion,
+      ideo = this;
 
-  syntenies = d3.select(ideo.selector)
-    .insert('g', ':first-child')
-    .attr('class', 'synteny');
+  syntenies = d3.select(ideo.selector).insert('g', ':first-child').attr('class', 'synteny');
 
   for (i = 0; i < syntenicRegions.length; i++) {
     regions = syntenicRegions[i];
@@ -14304,62 +14288,32 @@ function drawSynteny(syntenicRegions) {
     r2.startPx = this.convertBpToPx(r2.chr, r2.start);
     r2.stopPx = this.convertBpToPx(r2.chr, r2.stop);
 
-    regionID = (
-      r1.chr.id + '_' + r1.start + '_' + r1.stop + '_' +
-      '__' +
-      r2.chr.id + '_' + r2.start + '_' + r2.stop
-    );
+    regionID = r1.chr.id + '_' + r1.start + '_' + r1.stop + '_' + '__' + r2.chr.id + '_' + r2.start + '_' + r2.stop;
 
-    syntenicRegion = syntenies.append('g')
-      .attr('class', 'syntenicRegion')
-      .attr('id', regionID)
-      .on('click', function() {
-        var activeRegion = this;
-        var others = d3.selectAll(ideo.selector + ' .syntenicRegion')
-          .filter(function() {
-            return (this !== activeRegion);
-          });
-
-        others.classed('hidden', !others.classed('hidden'));
-      })
-      .on('mouseover', function() {
-        var activeRegion = this;
-        d3.selectAll(ideo.selector + ' .syntenicRegion')
-          .filter(function() {
-            return (this !== activeRegion);
-          })
-          .classed('ghost', true);
-      })
-      .on('mouseout', function() {
-        d3.selectAll(ideo.selector + ' .syntenicRegion')
-          .classed('ghost', false);
+    syntenicRegion = syntenies.append('g').attr('class', 'syntenicRegion').attr('id', regionID).on('click', function () {
+      var activeRegion = this;
+      var others = d3.selectAll(ideo.selector + ' .syntenicRegion').filter(function () {
+        return this !== activeRegion;
       });
+
+      others.classed('hidden', !others.classed('hidden'));
+    }).on('mouseover', function () {
+      var activeRegion = this;
+      d3.selectAll(ideo.selector + ' .syntenicRegion').filter(function () {
+        return this !== activeRegion;
+      }).classed('ghost', true);
+    }).on('mouseout', function () {
+      d3.selectAll(ideo.selector + ' .syntenicRegion').classed('ghost', false);
+    });
     var chrWidth = ideo.config.chrWidth;
     var x1 = this._layout.getChromosomeSetYTranslate(0);
     var x2 = this._layout.getChromosomeSetYTranslate(1) - chrWidth;
 
-    syntenicRegion.append('polygon')
-      .attr('points',
-        x1 + ', ' + r1.startPx + ' ' +
-        x1 + ', ' + r1.stopPx + ' ' +
-        x2 + ', ' + r2.stopPx + ' ' +
-        x2 + ', ' + r2.startPx
-      )
-      .attr('style', 'fill: ' + color + '; fill-opacity: ' + opacity);
+    syntenicRegion.append('polygon').attr('points', x1 + ', ' + r1.startPx + ' ' + x1 + ', ' + r1.stopPx + ' ' + x2 + ', ' + r2.stopPx + ' ' + x2 + ', ' + r2.startPx).attr('style', 'fill: ' + color + '; fill-opacity: ' + opacity);
 
-    syntenicRegion.append('line')
-      .attr('class', 'syntenyBorder')
-      .attr('x1', x1)
-      .attr('x2', x2)
-      .attr('y1', r1.startPx)
-      .attr('y2', r2.startPx);
+    syntenicRegion.append('line').attr('class', 'syntenyBorder').attr('x1', x1).attr('x2', x2).attr('y1', r1.startPx).attr('y2', r2.startPx);
 
-    syntenicRegion.append('line')
-      .attr('class', 'syntenyBorder')
-      .attr('x1', x1)
-      .attr('x2', x2)
-      .attr('y1', r1.stopPx)
-      .attr('y2', r2.stopPx);
+    syntenicRegion.append('line').attr('class', 'syntenyBorder').attr('x1', x1).attr('x2', x2).attr('y1', r1.stopPx).attr('y2', r2.stopPx);
   }
 
   var t1 = new Date().getTime();
@@ -14370,111 +14324,116 @@ function drawSynteny(syntenicRegions) {
 
 
 
-
 /***/ }),
 /* 253 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-class BedParser {
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return BedParser; });
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
-  constructor(bed, ideo) {
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+var BedParser = function () {
+  function BedParser(bed, ideo) {
+    _classCallCheck(this, BedParser);
+
     this.rawAnnots = this.parseBed(bed, ideo);
   }
 
   // http://stackoverflow.com/a/5624139
-  static componentToHex(c) {
-    var hex = parseInt(c, 10).toString(16);
-    return hex.length === 1 ? "0" + hex : hex;
-  }
 
-  static rgbToHex(r, g, b) {
-    return (
-      "#" +
-      BedParser.componentToHex(r) +
-      BedParser.componentToHex(g) +
-      BedParser.componentToHex(b)
-    );
-  }
 
-  /*
-  * Parses a BED file, returns raw annotations
-  * BED documentation: https://genome.ucsc.edu/FAQ/FAQformat#format1
-  */
-  parseBed(bed, ideo) {
+  _createClass(BedParser, [{
+    key: "parseBed",
 
-    var tsvLines, i, columns, chrs, chr, start, stop, chrIndex, annots, annot,
-      bedStartIndex, ucscStyle, rgb, color, label, keys,
-      rawAnnots;
 
-    annots = [];
+    /*
+    * Parses a BED file, returns raw annotations
+    * BED documentation: https://genome.ucsc.edu/FAQ/FAQformat#format1
+    */
+    value: function parseBed(bed, ideo) {
 
-    chrs = Object.keys(ideo.chromosomes[ideo.config.taxid]);
+      var tsvLines, i, columns, chrs, chr, start, stop, chrIndex, annots, annot, bedStartIndex, ucscStyle, rgb, color, label, keys, rawAnnots;
 
-    for (i = 0; i < chrs.length; i++) {
-      chr = chrs[i];
-      annots.push({chr: chr, annots: []});
-    }
+      annots = [];
 
-    tsvLines = bed.split(/\r\n|\n/);
+      chrs = Object.keys(ideo.chromosomes[ideo.config.taxid]);
 
-    bedStartIndex = 0; // 1 if BED has header (i.e. track line), 0 otherwise
-    ucscStyle = true;
-    if (tsvLines[0].slice(0, 3) === 'chr' || isNaN(parseInt(tsvLines[0], 10))) {
-      bedStartIndex = 1;
-    }
-
-    if (isNaN(parseInt(tsvLines[bedStartIndex], 10)) === false) {
-      ucscStyle = false;
-    }
-
-    for (i = bedStartIndex; i < tsvLines.length; i++) {
-      columns = tsvLines[i].split(/\s/g);
-
-      // These three columns (i.e. fields) are required
-      chr = columns[0];
-      start = parseInt(columns[1], 10);
-      stop = parseInt(columns[2], 10);
-
-      length = stop - start;
-
-      if (ucscStyle) {
-        chr = chr.slice(3);
-      }
-      chrIndex = chrs.indexOf(chr);
-      if (chrIndex === -1) {
-        continue;
-      }
-      annot = ["", start, length, 0];
-
-      if (columns.length >= 4) {
-        label = columns[3];
-        annot[0] = label;
+      for (i = 0; i < chrs.length; i++) {
+        chr = chrs[i];
+        annots.push({ chr: chr, annots: [] });
       }
 
-      if (columns.length >= 8) {
-        rgb = columns[8].split(',');
-        color = BedParser.rgbToHex(rgb[0], rgb[1], rgb[2]);
-        annot.push(color);
+      tsvLines = bed.split(/\r\n|\n/);
+
+      bedStartIndex = 0; // 1 if BED has header (i.e. track line), 0 otherwise
+      ucscStyle = true;
+      if (tsvLines[0].slice(0, 3) === 'chr' || isNaN(parseInt(tsvLines[0], 10))) {
+        bedStartIndex = 1;
       }
 
-      annots[chrIndex].annots.push(annot);
+      if (isNaN(parseInt(tsvLines[bedStartIndex], 10)) === false) {
+        ucscStyle = false;
+      }
+
+      for (i = bedStartIndex; i < tsvLines.length; i++) {
+        columns = tsvLines[i].split(/\s/g);
+
+        // These three columns (i.e. fields) are required
+        chr = columns[0];
+        start = parseInt(columns[1], 10);
+        stop = parseInt(columns[2], 10);
+
+        length = stop - start;
+
+        if (ucscStyle) {
+          chr = chr.slice(3);
+        }
+        chrIndex = chrs.indexOf(chr);
+        if (chrIndex === -1) {
+          continue;
+        }
+        annot = ["", start, length, 0];
+
+        if (columns.length >= 4) {
+          label = columns[3];
+          annot[0] = label;
+        }
+
+        if (columns.length >= 8) {
+          rgb = columns[8].split(',');
+          color = BedParser.rgbToHex(rgb[0], rgb[1], rgb[2]);
+          annot.push(color);
+        }
+
+        annots[chrIndex].annots.push(annot);
+      }
+      keys = ['name', 'start', 'length', 'trackIndex'];
+      if (tsvLines[bedStartIndex].length >= 8) {
+        keys.push('color');
+      }
+      rawAnnots = {
+        keys: keys,
+        annots: annots
+      };
+      return rawAnnots;
     }
-    keys = ['name', 'start', 'length', 'trackIndex'];
-    if (tsvLines[bedStartIndex].length >= 8) {
-      keys.push('color');
+  }], [{
+    key: "componentToHex",
+    value: function componentToHex(c) {
+      var hex = parseInt(c, 10).toString(16);
+      return hex.length === 1 ? "0" + hex : hex;
     }
-    rawAnnots = {
-      keys: keys,
-      annots: annots
-    };
-    return rawAnnots;
-  }
+  }, {
+    key: "rgbToHex",
+    value: function rgbToHex(r, g, b) {
+      return "#" + BedParser.componentToHex(r) + BedParser.componentToHex(g) + BedParser.componentToHex(b);
+    }
+  }]);
 
-}
-/* harmony export (immutable) */ __webpack_exports__["a"] = BedParser;
-
-
+  return BedParser;
+}();
 
 /***/ }),
 /* 254 */
@@ -14514,14 +14473,16 @@ var elink = eutils + 'elink.fcgi?retmode=json';
  *  Returns an NCBI taxonomy identifier (taxid) for the configured organism
  */
 function getTaxidFromEutils(callback) {
-  var organism, taxonomySearch, taxid,
-    ideo = this;
+  var organism,
+      taxonomySearch,
+      taxid,
+      ideo = this;
 
   organism = ideo.config.organism;
 
   taxonomySearch = ideo.esearch + '&db=taxonomy&term=' + organism;
 
-  d3.json(taxonomySearch, function(data) {
+  d3.json(taxonomySearch, function (data) {
     taxid = data.esearchresult.idlist[0];
     return callback(taxid);
   });
@@ -14534,14 +14495,16 @@ function getTaxidFromEutils(callback) {
  * @param callback Function to call upon completing ESearch request
  */
 function getOrganismFromEutils(callback) {
-  var organism, taxonomySearch, taxid,
-    ideo = this;
+  var organism,
+      taxonomySearch,
+      taxid,
+      ideo = this;
 
   taxid = ideo.config.organism;
 
   taxonomySearch = ideo.esummary + '&db=taxonomy&id=' + taxid;
 
-  d3.json(taxonomySearch, function(data) {
+  d3.json(taxonomySearch, function (data) {
     organism = data.result[String(taxid)].commonname;
     ideo.config.organism = organism;
     return callback(organism);
@@ -14555,18 +14518,21 @@ function getOrganismFromEutils(callback) {
  **/
 function getTaxids(callback) {
   var ideo = this,
-    taxid, taxids,
-    org, orgs, i,
-    taxidInit, tmpChrs,
-    assembly, chromosomes,
-    multiorganism, promise;
+      taxid,
+      taxids,
+      org,
+      orgs,
+      i,
+      taxidInit,
+      tmpChrs,
+      assembly,
+      chromosomes,
+      multiorganism,
+      promise;
 
   taxidInit = 'taxid' in ideo.config;
 
-  ideo.config.multiorganism = (
-    ('organism' in ideo.config && ideo.config.organism instanceof Array) ||
-    (taxidInit && ideo.config.taxid instanceof Array)
-  );
+  ideo.config.multiorganism = 'organism' in ideo.config && ideo.config.organism instanceof Array || taxidInit && ideo.config.taxid instanceof Array;
 
   multiorganism = ideo.config.multiorganism;
 
@@ -14595,19 +14561,16 @@ function getTaxids(callback) {
       }
     }
 
-    if (
-      taxids.length === 0 ||
-      ideo.assemblyIsAccession() && /GCA_/.test(ideo.config.assembly)
-    ) {
+    if (taxids.length === 0 || ideo.assemblyIsAccession() && /GCA_/.test(ideo.config.assembly)) {
       // if (taxids.length === 0) {
-      promise = new __WEBPACK_IMPORTED_MODULE_3_es6_promise__["Promise"](function(resolve) {
+      promise = new __WEBPACK_IMPORTED_MODULE_3_es6_promise__["Promise"](function (resolve) {
         ideo.getTaxidFromEutils(resolve);
       });
 
-      promise.then(function(data) {
+      promise.then(function (data) {
         var organism = ideo.config.organism,
-          dataDir = ideo.config.dataDir,
-          urlOrg = organism.replace(' ', '-');
+            dataDir = ideo.config.dataDir,
+            urlOrg = organism.replace(' ', '-');
 
         taxid = data;
 
@@ -14623,16 +14586,13 @@ function getTaxids(callback) {
         };
 
         var fullyBandedTaxids = ['9606', '10090', '10116'];
-        if (
-          fullyBandedTaxids.indexOf(taxid) !== -1 &&
-          ideo.config.showFullyBanded === false
-        ) {
+        if (fullyBandedTaxids.indexOf(taxid) !== -1 && ideo.config.showFullyBanded === false) {
           urlOrg += '-no-bands';
         }
         var chromosomesUrl = dataDir + urlOrg + '.js';
 
-        var promise = new __WEBPACK_IMPORTED_MODULE_3_es6_promise__["Promise"](function(resolve, reject) {
-          d3.request(chromosomesUrl).get(function(error, data) {
+        var promise = new __WEBPACK_IMPORTED_MODULE_3_es6_promise__["Promise"](function (resolve, reject) {
+          d3.request(chromosomesUrl).get(function (error, data) {
             if (error) {
               reject(Error(error));
             }
@@ -14640,54 +14600,49 @@ function getTaxids(callback) {
           });
         });
 
-        return promise
-          .then(
-            function(data) {
-              // Check if chromosome data exists locally.
-              // This is used for pre-processed centromere data,
-              // which is not accessible via EUtils.  See get_chromosomes.py.
+        return promise.then(function (data) {
+          // Check if chromosome data exists locally.
+          // This is used for pre-processed centromere data,
+          // which is not accessible via EUtils.  See get_chromosomes.py.
 
-              var asmAndChrArray = [],
-                chromosomes = [],
-                seenChrs = {},
-                chr;
+          var asmAndChrArray = [],
+              chromosomes = [],
+              seenChrs = {},
+              chr;
 
-              eval(data.response);
+          eval(data.response);
 
-              asmAndChrArray.push('');
+          asmAndChrArray.push('');
 
-              for (var i = 0; i < chrBands.length; i++) {
-                chr = chrBands[i].split(' ')[0];
-                if (chr in seenChrs) {
-                  continue;
-                } else {
-                  chromosomes.push({name: chr, type: 'nuclear'});
-                  seenChrs[chr] = 1;
-                }
-              }
-              chromosomes = chromosomes.sort(Ideogram.sortChromosomes);
-              asmAndChrArray.push(chromosomes);
-              ideo.coordinateSystem = 'iscn';
-              return asmAndChrArray;
-            },
-            function() {
-              return new __WEBPACK_IMPORTED_MODULE_3_es6_promise__["Promise"](function(resolve) {
-                ideo.coordinateSystem = 'bp';
-                ideo.getAssemblyAndChromosomesFromEutils(resolve);
-              });
+          for (var i = 0; i < chrBands.length; i++) {
+            chr = chrBands[i].split(' ')[0];
+            if (chr in seenChrs) {
+              continue;
+            } else {
+              chromosomes.push({ name: chr, type: 'nuclear' });
+              seenChrs[chr] = 1;
             }
-          );
-      })
-        .then(function(asmChrArray) {
-          assembly = asmChrArray[0];
-          chromosomes = asmChrArray[1];
-          ideo.config.chromosomes = chromosomes;
-          ideo.organisms[taxid].assemblies = {
-            default: assembly
-          };
-
-          callback(taxids);
+          }
+          chromosomes = chromosomes.sort(Ideogram.sortChromosomes);
+          asmAndChrArray.push(chromosomes);
+          ideo.coordinateSystem = 'iscn';
+          return asmAndChrArray;
+        }, function () {
+          return new __WEBPACK_IMPORTED_MODULE_3_es6_promise__["Promise"](function (resolve) {
+            ideo.coordinateSystem = 'bp';
+            ideo.getAssemblyAndChromosomesFromEutils(resolve);
+          });
         });
+      }).then(function (asmChrArray) {
+        assembly = asmChrArray[0];
+        chromosomes = asmChrArray[1];
+        ideo.config.chromosomes = chromosomes;
+        ideo.organisms[taxid].assemblies = {
+          default: assembly
+        };
+
+        callback(taxids);
+      });
     } else {
       ideo.config.taxids = taxids;
       if (multiorganism) {
@@ -14720,13 +14675,27 @@ function getTaxids(callback) {
  * @param callback Function to call upon completion of this async method
  */
 function getAssemblyAndChromosomesFromEutils(callback) {
-  var asmAndChrArray, // [assembly_accession, chromosome_objects_array]
-    organism, assemblyAccession, chromosomes, termStem, asmSearch,
-    asmUid, asmSummary,
-    gbUid, nuccoreLink,
-    links, ntSummary,
-    results, result, cnIndex, chrName, chrLength, chromosome, type,
-    ideo = this;
+  var asmAndChrArray,
+      // [assembly_accession, chromosome_objects_array]
+  organism,
+      assemblyAccession,
+      chromosomes,
+      termStem,
+      asmSearch,
+      asmUid,
+      asmSummary,
+      gbUid,
+      nuccoreLink,
+      links,
+      ntSummary,
+      results,
+      result,
+      cnIndex,
+      chrName,
+      chrLength,
+      chromosome,
+      type,
+      ideo = this;
 
   organism = ideo.config.organism;
 
@@ -14736,126 +14705,107 @@ function getAssemblyAndChromosomesFromEutils(callback) {
   if (ideo.assemblyIsAccession()) {
     termStem = ideo.config.assembly + '%22[Assembly%20Accession]';
   } else {
-    termStem = (
-      organism + '%22[organism]' +
-      'AND%20(%22latest%20refseq%22[filter])%20'
-    );
+    termStem = organism + '%22[organism]' + 'AND%20(%22latest%20refseq%22[filter])%20';
   }
 
-  asmSearch =
-    ideo.esearch +
-    '&db=assembly' +
-    '&term=%22' + termStem +
-    'AND%20(%22chromosome%20level%22[filter]%20' +
-    'OR%20%22complete%20genome%22[filter])';
+  asmSearch = ideo.esearch + '&db=assembly' + '&term=%22' + termStem + 'AND%20(%22chromosome%20level%22[filter]%20' + 'OR%20%22complete%20genome%22[filter])';
 
   var promise = d3.promise.json(asmSearch);
 
-  promise
-    .then(function(data) {
-      // NCBI Assembly database's internal identifier (uid) for this assembly
-      asmUid = data.esearchresult.idlist[0];
-      asmSummary = ideo.esummary + '&db=assembly&id=' + asmUid;
+  promise.then(function (data) {
+    // NCBI Assembly database's internal identifier (uid) for this assembly
+    asmUid = data.esearchresult.idlist[0];
+    asmSummary = ideo.esummary + '&db=assembly&id=' + asmUid;
 
-      return d3.promise.json(asmSummary);
-    })
-    .then(function(data) {
-      // GenBank UID for this assembly
-      gbUid = data.result[asmUid].gbuid;
-      assemblyAccession = data.result[asmUid].assemblyaccession;
+    return d3.promise.json(asmSummary);
+  }).then(function (data) {
+    // GenBank UID for this assembly
+    gbUid = data.result[asmUid].gbuid;
+    assemblyAccession = data.result[asmUid].assemblyaccession;
 
-      asmAndChrArray.push(assemblyAccession);
+    asmAndChrArray.push(assemblyAccession);
 
-      // Get a list of IDs for the chromosomes in this genome.
-      //
-      // This information does not seem to be available from well-known
-      // NCBI databases like Assembly or Nucleotide, so we use GenColl,
-      // a lesser-known NCBI database.
-      var qs = '&db=nuccore&linkname=gencoll_nuccore_chr&from_uid=' + gbUid;
-      nuccoreLink = ideo.elink + qs;
+    // Get a list of IDs for the chromosomes in this genome.
+    //
+    // This information does not seem to be available from well-known
+    // NCBI databases like Assembly or Nucleotide, so we use GenColl,
+    // a lesser-known NCBI database.
+    var qs = '&db=nuccore&linkname=gencoll_nuccore_chr&from_uid=' + gbUid;
+    nuccoreLink = ideo.elink + qs;
 
-      return d3.promise.json(nuccoreLink);
-    })
-    .then(function(data) {
-      links = data.linksets[0].linksetdbs[0].links.join(',');
-      ntSummary = ideo.esummary + '&db=nucleotide&id=' + links;
+    return d3.promise.json(nuccoreLink);
+  }).then(function (data) {
+    links = data.linksets[0].linksetdbs[0].links.join(',');
+    ntSummary = ideo.esummary + '&db=nucleotide&id=' + links;
 
-      return d3.promise.json(ntSummary);
-    })
-    .then(function(data) {
-      results = data.result;
+    return d3.promise.json(ntSummary);
+  }).then(function (data) {
+    results = data.result;
 
-      for (var x in results) {
-        result = results[x];
+    for (var x in results) {
+      result = results[x];
 
-        // omit list of reult uids
-        if (x === 'uids') {
-          continue;
-        }
-
-        if (result.genome === 'mitochondrion') {
-          if (ideo.config.showNonNuclearChromosomes) {
-            type = result.genome;
-            cnIndex = result.subtype.split('|').indexOf('plasmid');
-            if (cnIndex === -1) {
-              chrName = 'MT';
-            } else {
-              // Seen in e.g. rice genome IRGSP-1.0 (GCF_001433935.1),
-              // From https://eutils.ncbi.nlm.nih.gov/entrez/eutils/esummary.fcgi?retmode=json&db=nucleotide&id=996703432,996703431,996703430,996703429,996703428,996703427,996703426,996703425,996703424,996703423,996703422,996703421,194033210,11466763,7524755
-              // genome: 'mitochondrion',
-              // subtype: 'cell_line|plasmid',
-              // subname: 'A-58 CMS|B1',
-              chrName = result.subname.split('|')[cnIndex];
-            }
-          } else {
-            continue;
-          }
-        } else if (
-          result.genome === 'chloroplast' ||
-          result.genome === 'plastid'
-        ) {
-          type = 'chloroplast';
-          // Plastid encountered with rice genome IRGSP-1.0 (GCF_001433935.1)
-          if (ideo.config.showNonNuclearChromosomes) {
-            chrName = 'CP';
-          } else {
-            continue;
-          }
-        } else {
-          type = 'nuclear';
-          cnIndex = result.subtype.split('|').indexOf('chromosome');
-
-          chrName = result.subname.split('|')[cnIndex];
-
-          if (
-            typeof chrName !== 'undefined' &&
-            chrName.substr(0, 3) === 'chr'
-          ) {
-            // Convert "chr12" to "12", e.g. for banana (GCF_000313855.2)
-            chrName = chrName.substr(3);
-          }
-        }
-
-        chrLength = result.slen;
-
-        chromosome = {
-          name: chrName,
-          length: chrLength,
-          type: type
-        };
-
-        chromosomes.push(chromosome);
+      // omit list of reult uids
+      if (x === 'uids') {
+        continue;
       }
 
-      chromosomes = chromosomes.sort(Ideogram.sortChromosomes);
-      asmAndChrArray.push(chromosomes);
+      if (result.genome === 'mitochondrion') {
+        if (ideo.config.showNonNuclearChromosomes) {
+          type = result.genome;
+          cnIndex = result.subtype.split('|').indexOf('plasmid');
+          if (cnIndex === -1) {
+            chrName = 'MT';
+          } else {
+            // Seen in e.g. rice genome IRGSP-1.0 (GCF_001433935.1),
+            // From https://eutils.ncbi.nlm.nih.gov/entrez/eutils/esummary.fcgi?retmode=json&db=nucleotide&id=996703432,996703431,996703430,996703429,996703428,996703427,996703426,996703425,996703424,996703423,996703422,996703421,194033210,11466763,7524755
+            // genome: 'mitochondrion',
+            // subtype: 'cell_line|plasmid',
+            // subname: 'A-58 CMS|B1',
+            chrName = result.subname.split('|')[cnIndex];
+          }
+        } else {
+          continue;
+        }
+      } else if (result.genome === 'chloroplast' || result.genome === 'plastid') {
+        type = 'chloroplast';
+        // Plastid encountered with rice genome IRGSP-1.0 (GCF_001433935.1)
+        if (ideo.config.showNonNuclearChromosomes) {
+          chrName = 'CP';
+        } else {
+          continue;
+        }
+      } else {
+        type = 'nuclear';
+        cnIndex = result.subtype.split('|').indexOf('chromosome');
 
-      ideo.coordinateSystem = 'bp';
+        chrName = result.subname.split('|')[cnIndex];
 
-      return callback(asmAndChrArray);
-    });
+        if (typeof chrName !== 'undefined' && chrName.substr(0, 3) === 'chr') {
+          // Convert "chr12" to "12", e.g. for banana (GCF_000313855.2)
+          chrName = chrName.substr(3);
+        }
+      }
+
+      chrLength = result.slen;
+
+      chromosome = {
+        name: chrName,
+        length: chrLength,
+        type: type
+      };
+
+      chromosomes.push(chromosome);
+    }
+
+    chromosomes = chromosomes.sort(Ideogram.sortChromosomes);
+    asmAndChrArray.push(chromosomes);
+
+    ideo.coordinateSystem = 'bp';
+
+    return callback(asmAndChrArray);
+  });
 }
-
 
 
 
@@ -14869,6 +14819,8 @@ function getAssemblyAndChromosomesFromEutils(callback) {
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "b", function() { return getBandColorGradients; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "d", function() { return processBandData; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_d3_selection__ = __webpack_require__(0);
+var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
+
 /**
  * @fileoverview Methods for processing chromosome length and band data.
  *
@@ -14901,18 +14853,26 @@ var d3 = Object.assign({}, __WEBPACK_IMPORTED_MODULE_0_d3_selection__);
  */
 function getBands(content, taxid, chromosomes) {
   var lines = {},
-    delimiter, tsvLines, columns, line, stain, chr,
-    i, init, tsvLinesLength, source,
-    start, stop, firstColumn, tmp;
+      delimiter,
+      tsvLines,
+      columns,
+      line,
+      stain,
+      chr,
+      i,
+      init,
+      tsvLinesLength,
+      source,
+      start,
+      stop,
+      firstColumn,
+      tmp;
 
   if (content.slice(0, 15) === 'window.chrBands') {
     source = 'native';
   }
 
-  if (
-    chromosomes instanceof Array &&
-    typeof chromosomes[0] === 'object'
-  ) {
+  if (chromosomes instanceof Array && _typeof(chromosomes[0]) === 'object') {
     tmp = [];
     for (i = 0; i < chromosomes.length; i++) {
       tmp.push(chromosomes[i].name);
@@ -14952,11 +14912,9 @@ function getBands(content, taxid, chromosomes) {
       chr = columns[0];
 
       if (
-        // If a specific set of chromosomes has been requested, and
+      // If a specific set of chromosomes has been requested, and
       // the current chromosome
-      typeof (chromosomes) !== 'undefined' &&
-      chromosomes.indexOf(chr) === -1
-      ) {
+      typeof chromosomes !== 'undefined' && chromosomes.indexOf(chr) === -1) {
         continue;
       }
 
@@ -15082,73 +15040,55 @@ function drawBandLabels(chromosomes) {
 
     textOffsets[chrModel.id] = [];
 
-    chr.selectAll('text')
-      .data(chrModel.bands)
-      .enter()
-      .append('g')
-      .attr('class', function(d, i) {
-        return 'bandLabel bsbsl-' + i;
-      })
-      .attr('transform', function(d) {
-        var transform = ideo._layout.getChromosomeBandLabelTranslate(d, i);
+    chr.selectAll('text').data(chrModel.bands).enter().append('g').attr('class', function (d, i) {
+      return 'bandLabel bsbsl-' + i;
+    }).attr('transform', function (d) {
+      var transform = ideo._layout.getChromosomeBandLabelTranslate(d, i);
 
-        var x = transform.x;
-        // var y = transform.y;
+      var x = transform.x;
+      // var y = transform.y;
 
-        textOffsets[chrModel.id].push(x + 13);
+      textOffsets[chrModel.id].push(x + 13);
 
-        return transform.translate;
-      })
-      .append('text')
-      .attr('text-anchor', ideo._layout.getChromosomeBandLabelAnchor(i))
-      .text(function(d) {
-        return d.name;
-      });
+      return transform.translate;
+    }).append('text').attr('text-anchor', ideo._layout.getChromosomeBandLabelAnchor(i)).text(function (d) {
+      return d.name;
+    });
 
     // var adapter = ModelAdapter.getInstance(ideo.chromosomesArray[i]);
     // var view = Chromosome.getInstance(adapter, ideo.config, ideo);
 
-    chr.selectAll('line.bandLabelStalk')
-      .data(chrModel.bands)
-      .enter()
-      .append('g')
-      .attr('class', function(d, i) {
-        return 'bandLabelStalk bsbsl-' + i;
-      })
-      .attr('transform', function(d) {
-        var x, y;
+    chr.selectAll('line.bandLabelStalk').data(chrModel.bands).enter().append('g').attr('class', function (d, i) {
+      return 'bandLabelStalk bsbsl-' + i;
+    }).attr('transform', function (d) {
+      var x, y;
 
-        x = ideo.round(d.px.start + d.px.width / 2);
+      x = ideo.round(d.px.start + d.px.width / 2);
 
-        textOffsets[chrModel.id].push(x + 13);
-        y = -10;
+      textOffsets[chrModel.id].push(x + 13);
+      y = -10;
 
-        return 'translate(' + x + ',' + y + ')';
-      })
-      .append('line')
-      .attr('x1', 0)
-      .attr('y1', function() {
-        return ideo._layout.getChromosomeBandTickY1(i);
-      })
-      .attr('x2', 0)
-      .attr('y2', function() {
-        return ideo._layout.getChromosomeBandTickY2(i);
-      });
+      return 'translate(' + x + ',' + y + ')';
+    }).append('line').attr('x1', 0).attr('y1', function () {
+      return ideo._layout.getChromosomeBandTickY1(i);
+    }).attr('x2', 0).attr('y2', function () {
+      return ideo._layout.getChromosomeBandTickY2(i);
+    });
   }
 
   for (i = 0; i < chrs.length; i++) {
     chrModel = chrs[i];
 
     var textsLength = textOffsets[chrModel.id].length,
-      overlappingLabelXRight,
-      index,
-      indexesToShow = [],
-      prevHiddenBoxIndex,
-      xLeft,
-      prevLabelXRight,
-      prevTextBoxLeft,
-      prevTextBoxWidth,
-      textPadding;
+        overlappingLabelXRight,
+        index,
+        indexesToShow = [],
+        prevHiddenBoxIndex,
+        xLeft,
+        prevLabelXRight,
+        prevTextBoxLeft,
+        prevTextBoxWidth,
+        textPadding;
 
     overlappingLabelXRight = 0;
 
@@ -15182,9 +15122,7 @@ function drawBandLabels(chromosomes) {
         prevLabelXRight = prevTextBoxLeft + prevTextBoxWidth;
       }
 
-      if (
-        xLeft < prevLabelXRight + textPadding
-      ) {
+      if (xLeft < prevLabelXRight + textPadding) {
         prevHiddenBoxIndex = index;
         overlappingLabelXRight = prevLabelXRight;
       } else {
@@ -15193,8 +15131,8 @@ function drawBandLabels(chromosomes) {
     }
 
     var selectorsToShow = [],
-      ithLength = indexesToShow.length,
-      j;
+        ithLength = indexesToShow.length,
+        j;
 
     for (j = 0; j < ithLength; j++) {
       index = indexesToShow[j];
@@ -15210,118 +15148,41 @@ function drawBandLabels(chromosomes) {
  */
 function getBandColorGradients() {
   var colors,
-    stain, color1, color2, color3,
-    css,
-    gradients = '';
+      stain,
+      color1,
+      color2,
+      color3,
+      css,
+      gradients = '';
 
-  colors = [
-    ['gneg', '#FFF', '#FFF', '#DDD'],
-    ['gpos25', '#C8C8C8', '#DDD', '#BBB'],
-    ['gpos33', '#BBB', '#BBB', '#AAA'],
-    ['gpos50', '#999', '#AAA', '#888'],
-    ['gpos66', '#888', '#888', '#666'],
-    ['gpos75', '#777', '#777', '#444'],
-    ['gpos100', '#444', '#666', '#000'],
-    ['acen', '#FEE', '#FEE', '#FDD'],
-    ['noBands', '#BBB', '#BBB', '#AAA']
-  ];
+  colors = [['gneg', '#FFF', '#FFF', '#DDD'], ['gpos25', '#C8C8C8', '#DDD', '#BBB'], ['gpos33', '#BBB', '#BBB', '#AAA'], ['gpos50', '#999', '#AAA', '#888'], ['gpos66', '#888', '#888', '#666'], ['gpos75', '#777', '#777', '#444'], ['gpos100', '#444', '#666', '#000'], ['acen', '#FEE', '#FEE', '#FDD'], ['noBands', '#BBB', '#BBB', '#AAA']];
 
   for (var i = 0; i < colors.length; i++) {
     stain = colors[i][0];
     color1 = colors[i][1];
     color2 = colors[i][2];
     color3 = colors[i][3];
-    gradients +=
-      '<linearGradient id="' + stain + '" x1="0%" y1="0%" x2="0%" y2="100%">';
+    gradients += '<linearGradient id="' + stain + '" x1="0%" y1="0%" x2="0%" y2="100%">';
     if (stain === "gneg") {
-      gradients +=
-        '<stop offset="70%" stop-color="' + color2 + '" />' +
-        '<stop offset="95%" stop-color="' + color3 + '" />' +
-        '<stop offset="100%" stop-color="' + color1 + '" />';
+      gradients += '<stop offset="70%" stop-color="' + color2 + '" />' + '<stop offset="95%" stop-color="' + color3 + '" />' + '<stop offset="100%" stop-color="' + color1 + '" />';
     } else {
-      gradients +=
-        '<stop offset="5%" stop-color="' + color1 + '" />' +
-        '<stop offset="15%" stop-color="' + color2 + '" />' +
-        '<stop offset="60%" stop-color="' + color3 + '" />';
+      gradients += '<stop offset="5%" stop-color="' + color1 + '" />' + '<stop offset="15%" stop-color="' + color2 + '" />' + '<stop offset="60%" stop-color="' + color3 + '" />';
     }
-    gradients +=
-      '</linearGradient>';
+    gradients += '</linearGradient>';
   }
 
-  css = '<style>' +
-    'svg#_ideogram  {padding-left: 5px;} ' +
-    'svg#_ideogram .labeled {padding-left: 15px;} ' +
-    'svg#_ideogram.labeledLeft {padding-left: 15px; padding-top: 15px;} ' +
-    // Tahoma has great readability and space utilization at small sizes
-    // More: http://ux.stackexchange.com/a/3334
-    '#_ideogram text {font: 9px Tahoma; fill: #000;} ' +
-    '#_ideogram .italic {font-style: italic;} ' +
-    // Fill below is fallback for IE11
-    '#_ideogram .chromosome {cursor: pointer; fill: #AAA;}' +
-    '#_ideogram .chrSetLabel {font-weight: bolder;}' +
-    '#_ideogram .ghost {opacity: 0.2;}' +
-    '#_ideogram .hidden {display: none;}' +
-    '#_ideogram .bandLabelStalk line {stroke: #AAA; stroke-width: 1;}' +
-    '#_ideogram .syntenyBorder {stroke:#AAA;stroke-width:1;}' +
-    '#_ideogram .brush .selection {' +
-    '  fill: #F00;' +
-    '  stroke: #F00;' +
-    '  fill-opacity: .3;' +
-    '  shape-rendering: crispEdges;' +
-    '}' +
-    '#_ideogram .noBands {fill: #AAA;}' +
-    // NCBI stain density colors
-    '#_ideogram .gneg {fill: #FFF}' +
-    '#_ideogram .gpos25 {fill: #BBB}' +
-    '#_ideogram .gpos33 {fill: #AAA}' +
-    '#_ideogram .gpos50 {fill: #888}' +
-    '#_ideogram .gpos66 {fill: #666}' +
-    '#_ideogram .gpos75 {fill: #444}' +
-    '#_ideogram .gpos100 {fill: #000}' +
-    '#_ideogram .gpos {fill: #000}' +
-    '#_ideogram .acen {fill: #FDD}' +
-    '#_ideogram .stalk {fill: #CCE;}' +
-    '#_ideogram .gvar {fill: #DDF}' +
-    // Used when overlaid with annotations
-    '#_ideogram.faint .gneg {fill: #FFF}' +
-    '#_ideogram.faint .gpos25 {fill: #EEE}' +
-    '#_ideogram.faint .gpos33 {fill: #EEE}' +
-    '#_ideogram.faint .gpos50 {fill: #EEE}' +
-    '#_ideogram.faint .gpos66 {fill: #EEE}' +
-    '#_ideogram.faint .gpos75 {fill: #EEE}' +
-    '#_ideogram.faint .gpos100 {fill: #DDD}' +
-    '#_ideogram.faint .gpos {fill: #DDD}' +
-    '#_ideogram.faint .acen {fill: #FEE}' +
-    '#_ideogram.faint .stalk {fill: #EEF;}' +
-    '#_ideogram.faint .gvar {fill: #EEF}' +
-    '.gneg {fill: url("#gneg")} ' +
-    '.gpos25 {fill: url("#gpos25")} ' +
-    '.gpos33 {fill: url("#gpos33")} ' +
-    '.gpos50 {fill: url("#gpos50")} ' +
-    '.gpos66 {fill: url("#gpos66")} ' +
-    '.gpos75 {fill: url("#gpos75")} ' +
-    '.gpos100 {fill: url("#gpos100")} ' +
-    '.gpos {fill: url("#gpos100")} ' +
-    '.acen {fill: url("#acen")} ' +
-    '.stalk {fill: url("#stalk")} ' +
-    '.gvar {fill: url("#gvar")} ' +
-    '.noBands {fill: url("#noBands")} ' +
-    '.chromosome {fill: url("#noBands")} ' +
-    '</style>';
+  css = '<style>' + 'svg#_ideogram  {padding-left: 5px;} ' + 'svg#_ideogram .labeled {padding-left: 15px;} ' + 'svg#_ideogram.labeledLeft {padding-left: 15px; padding-top: 15px;} ' +
+  // Tahoma has great readability and space utilization at small sizes
+  // More: http://ux.stackexchange.com/a/3334
+  '#_ideogram text {font: 9px Tahoma; fill: #000;} ' + '#_ideogram .italic {font-style: italic;} ' +
+  // Fill below is fallback for IE11
+  '#_ideogram .chromosome {cursor: pointer; fill: #AAA;}' + '#_ideogram .chrSetLabel {font-weight: bolder;}' + '#_ideogram .ghost {opacity: 0.2;}' + '#_ideogram .hidden {display: none;}' + '#_ideogram .bandLabelStalk line {stroke: #AAA; stroke-width: 1;}' + '#_ideogram .syntenyBorder {stroke:#AAA;stroke-width:1;}' + '#_ideogram .brush .selection {' + '  fill: #F00;' + '  stroke: #F00;' + '  fill-opacity: .3;' + '  shape-rendering: crispEdges;' + '}' + '#_ideogram .noBands {fill: #AAA;}' +
+  // NCBI stain density colors
+  '#_ideogram .gneg {fill: #FFF}' + '#_ideogram .gpos25 {fill: #BBB}' + '#_ideogram .gpos33 {fill: #AAA}' + '#_ideogram .gpos50 {fill: #888}' + '#_ideogram .gpos66 {fill: #666}' + '#_ideogram .gpos75 {fill: #444}' + '#_ideogram .gpos100 {fill: #000}' + '#_ideogram .gpos {fill: #000}' + '#_ideogram .acen {fill: #FDD}' + '#_ideogram .stalk {fill: #CCE;}' + '#_ideogram .gvar {fill: #DDF}' +
+  // Used when overlaid with annotations
+  '#_ideogram.faint .gneg {fill: #FFF}' + '#_ideogram.faint .gpos25 {fill: #EEE}' + '#_ideogram.faint .gpos33 {fill: #EEE}' + '#_ideogram.faint .gpos50 {fill: #EEE}' + '#_ideogram.faint .gpos66 {fill: #EEE}' + '#_ideogram.faint .gpos75 {fill: #EEE}' + '#_ideogram.faint .gpos100 {fill: #DDD}' + '#_ideogram.faint .gpos {fill: #DDD}' + '#_ideogram.faint .acen {fill: #FEE}' + '#_ideogram.faint .stalk {fill: #EEF;}' + '#_ideogram.faint .gvar {fill: #EEF}' + '.gneg {fill: url("#gneg")} ' + '.gpos25 {fill: url("#gpos25")} ' + '.gpos33 {fill: url("#gpos33")} ' + '.gpos50 {fill: url("#gpos50")} ' + '.gpos66 {fill: url("#gpos66")} ' + '.gpos75 {fill: url("#gpos75")} ' + '.gpos100 {fill: url("#gpos100")} ' + '.gpos {fill: url("#gpos100")} ' + '.acen {fill: url("#acen")} ' + '.stalk {fill: url("#stalk")} ' + '.gvar {fill: url("#gvar")} ' + '.noBands {fill: url("#noBands")} ' + '.chromosome {fill: url("#noBands")} ' + '</style>';
 
-  gradients +=
-    '<pattern id="stalk" width="2" height="1" patternUnits="userSpaceOnUse" ' +
-    'patternTransform="rotate(30 0 0)">' +
-    '<rect x="0" y="0" width="10" height="2" fill="#CCE" /> ' +
-    '<line x1="0" y1="0" x2="0" y2="100%" style="stroke:#88B; ' +
-    'stroke-width:0.7;" />' +
-    '</pattern>' +
-    '<pattern id="gvar" width="2" height="1" patternUnits="userSpaceOnUse" ' +
-    'patternTransform="rotate(-30 0 0)">' +
-    '<rect x="0" y="0" width="10" height="2" fill="#DDF" /> ' +
-    '<line x1="0" y1="0" x2="0" y2="100%" style="stroke:#99C; ' +
-    'stroke-width:0.7;" />' +
-    '</pattern>';
+  gradients += '<pattern id="stalk" width="2" height="1" patternUnits="userSpaceOnUse" ' + 'patternTransform="rotate(30 0 0)">' + '<rect x="0" y="0" width="10" height="2" fill="#CCE" /> ' + '<line x1="0" y1="0" x2="0" y2="100%" style="stroke:#88B; ' + 'stroke-width:0.7;" />' + '</pattern>' + '<pattern id="gvar" width="2" height="1" patternUnits="userSpaceOnUse" ' + 'patternTransform="rotate(-30 0 0)">' + '<rect x="0" y="0" width="10" height="2" fill="#DDF" /> ' + '<line x1="0" y1="0" x2="0" y2="100%" style="stroke:#99C; ' + 'stroke-width:0.7;" />' + '</pattern>';
   gradients = "<defs>" + gradients + "</defs>";
   gradients = css + gradients;
 
@@ -15335,11 +15196,21 @@ function getBandColorGradients() {
  * hide overlapping band labels, and execute callbacks defined by client code
  */
 function processBandData() {
-  var bandsArray, i, j, k, chromosome, bands,
-    chrLength, chr,
-    bandData, bandsByChr,
-    taxid, taxids, chrs, chrsByTaxid,
-    ideo = this;
+  var bandsArray,
+      i,
+      j,
+      k,
+      chromosome,
+      bands,
+      chrLength,
+      chr,
+      bandData,
+      bandsByChr,
+      taxid,
+      taxids,
+      chrs,
+      chrsByTaxid,
+      ideo = this;
 
   bandsArray = [];
 
@@ -15381,7 +15252,7 @@ function processBandData() {
 
       bandsByChr = ideo.getBands(bandData, taxid, chrs);
 
-      chrs = Object.keys(bandsByChr).sort(function(a, b) {
+      chrs = Object.keys(bandsByChr).sort(function (a, b) {
         return Ideogram.naturalSort(a, b);
       });
 
@@ -15479,18 +15350,18 @@ function onBrushMove() {
  */
 function createBrush(from, to) {
   var ideo = this,
-    width = ideo.config.chrWidth + 6.5,
-    length = ideo.config.chrHeight,
-    chr = ideo.chromosomesArray[0],
-    chrLengthBp = chr.bands[chr.bands.length - 1].bp.stop,
-    x0, x1,
-    xOffset = this._layout.getMargin().left,
-    xScale = d3.scaleLinear()
-      .domain([0, d3.max(chr.bands, function(band) {
-        return band.bp.stop;
-      })]).range([xOffset, d3.max(chr.bands, function(band) {
-        return band.px.stop;
-      }) + xOffset]);
+      width = ideo.config.chrWidth + 6.5,
+      length = ideo.config.chrHeight,
+      chr = ideo.chromosomesArray[0],
+      chrLengthBp = chr.bands[chr.bands.length - 1].bp.stop,
+      x0,
+      x1,
+      xOffset = this._layout.getMargin().left,
+      xScale = d3.scaleLinear().domain([0, d3.max(chr.bands, function (band) {
+    return band.bp.stop;
+  })]).range([xOffset, d3.max(chr.bands, function (band) {
+    return band.px.stop;
+  }) + xOffset]);
 
   if (typeof from === 'undefined') {
     from = Math.floor(chrLengthBp / 10);
@@ -15503,26 +15374,20 @@ function createBrush(from, to) {
   x0 = ideo.convertBpToPx(chr, from);
   x1 = ideo.convertBpToPx(chr, to);
 
-  ideo.selectedRegion = {from: from, to: to, extent: (to - from)};
+  ideo.selectedRegion = { from: from, to: to, extent: to - from };
 
-  ideo.brush = d3.brushX()
-    .extent([[xOffset, 0], [length + xOffset, width]])
-    .on('brush', onBrushMove);
+  ideo.brush = d3.brushX().extent([[xOffset, 0], [length + xOffset, width]]).on('brush', onBrushMove);
 
   var yTranslate = this._layout.getChromosomeSetYTranslate(0);
   var yOffset = yTranslate + (ideo.config.chrWidth - width) / 2;
-  d3.select(ideo.selector).append('g')
-    .attr('class', 'brush')
-    .attr('transform', 'translate(0, ' + yOffset + ')')
-    .call(ideo.brush)
-    .call(ideo.brush.move, [x0, x1]);
+  d3.select(ideo.selector).append('g').attr('class', 'brush').attr('transform', 'translate(0, ' + yOffset + ')').call(ideo.brush).call(ideo.brush.move, [x0, x1]);
 
   function onBrushMove() {
     var extent = __WEBPACK_IMPORTED_MODULE_0_d3_selection__["event"].selection.map(xScale.invert),
-      from = Math.floor(extent[0]),
-      to = Math.ceil(extent[1]);
+        from = Math.floor(extent[0]),
+        to = Math.ceil(extent[1]);
 
-    ideo.selectedRegion = {from: from, to: to, extent: (to - from)};
+    ideo.selectedRegion = { from: from, to: to, extent: to - from };
 
     if (ideo.onBrushMove) {
       ideo.onBrushMoveCallback();
@@ -15550,9 +15415,14 @@ function createBrush(from, to) {
  * Appends SVG elements depicting sex chromosomes to the document.
  */
 function drawSexChromosomes(bandsArray, taxid, container, defs, j, chrs) {
-  var chromosome, bands, chrModel, shape, sci, k,
-    sexChromosomeIndexes,
-    ideo = this;
+  var chromosome,
+      bands,
+      chrModel,
+      shape,
+      sci,
+      k,
+      sexChromosomeIndexes,
+      ideo = this;
 
   if (ideo.config.sex === 'male') {
     sexChromosomeIndexes = [1, 0];
@@ -15566,15 +15436,9 @@ function drawSexChromosomes(bandsArray, taxid, container, defs, j, chrs) {
     bands = bandsArray[sci];
     chrModel = ideo.getChromosomeModel(bands, chromosome, taxid, sci);
     shape = ideo.drawChromosome(chrModel, j, container, k);
-    defs.append('clipPath')
-      .attr('id', chrModel.id + '-chromosome-set-clippath')
-      .selectAll('path')
-      .data(shape)
-      .enter()
-      .append('path')
-      .attr('d', function(d) {
-        return d.path;
-      }).attr('class', function(d) {
+    defs.append('clipPath').attr('id', chrModel.id + '-chromosome-set-clippath').selectAll('path').data(shape).enter().append('path').attr('d', function (d) {
+      return d.path;
+    }).attr('class', function (d) {
       return d.class;
     });
   }
@@ -15605,8 +15469,9 @@ function setSexChromosomes(chrs) {
   }
 
   var ideo = this,
-    sexChrs = {X: 1, Y: 1},
-    chr, i;
+      sexChrs = { X: 1, Y: 1 },
+      chr,
+      i;
 
   ideo.sexChromosomes.list = [];
 
@@ -15654,8 +15519,7 @@ function setSexChromosomes(chrs) {
  * from the start of the chromosome.
  */
 function convertBpToPx(chr, bp) {
-  var i, band, bpToIscnScale, iscn, px, offset, pxStart, pxLength, iscnStart,
-    iscnStop, iscnLength, bpStart, bpStop, bpLength;
+  var i, band, bpToIscnScale, iscn, px, offset, pxStart, pxLength, iscnStart, iscnStop, iscnLength, bpStart, bpStop, bpLength;
 
   for (i = 0; i < chr.bands.length; i++) {
     band = chr.bands[i];
@@ -15674,16 +15538,13 @@ function convertBpToPx(chr, bp) {
       bpToIscnScale = iscnLength / bpLength;
       iscn = iscnStart + (bp - bpStart) * bpToIscnScale;
 
-      px = offset + pxStart + (pxLength * (iscn - iscnStart) / (iscnLength));
+      px = offset + pxStart + pxLength * (iscn - iscnStart) / iscnLength;
 
       return px;
     }
   }
 
-  throw new Error(
-    'Base pair out of range.  ' +
-    'bp: ' + bp + '; length of chr' + chr.name + ': ' + band.bp.stop
-  );
+  throw new Error('Base pair out of range.  ' + 'bp: ' + bp + '; length of chr' + chr.name + ': ' + band.bp.stop);
 }
 
 /**
@@ -15695,8 +15556,7 @@ function convertBpToPx(chr, bp) {
  * convert pixels to base pairs.
  */
 function convertPxToBp(chr, px) {
-  var i, band, pxToIscnScale, iscn, bp, pxLength,
-    pxStart, pxStop, iscnStart, iscnStop, bpLength, iscnLength;
+  var i, band, pxToIscnScale, iscn, bp, pxLength, pxStart, pxStop, iscnStart, iscnStop, bpLength, iscnLength;
 
   if (px === 0) {
     px = chr.bands[0].px.start;
@@ -15718,16 +15578,13 @@ function convertPxToBp(chr, px) {
       pxToIscnScale = iscnLength / pxLength;
       iscn = iscnStart + (px - pxStart) * pxToIscnScale;
 
-      bp = band.bp.start + (bpLength * (iscn - iscnStart) / iscnLength);
+      bp = band.bp.start + bpLength * (iscn - iscnStart) / iscnLength;
 
       return Math.round(bp);
     }
   }
 
-  throw new Error(
-    'Pixel out of range.  ' +
-    'px: ' + px + '; length of chr' + chr.name + ': ' + pxStop
-  );
+  throw new Error('Pixel out of range.  ' + 'px: ' + px + '; length of chr' + chr.name + ': ' + pxStop);
 }
 
 
@@ -15766,10 +15623,7 @@ var d3 = Object.assign({}, __WEBPACK_IMPORTED_MODULE_0_d3_selection__);
  * @returns {boolean}
  */
 function assemblyIsAccession() {
-  return (
-    'assembly' in this.config &&
-    /(GCF_|GCA_)/.test(this.config.assembly)
-  );
+  return 'assembly' in this.config && /(GCF_|GCA_)/.test(this.config.assembly);
 }
 
 /**
@@ -15784,25 +15638,24 @@ function assemblyIsAccession() {
  */
 function getDataDir() {
   var scripts = document.scripts,
-    host = location.host,
-    version = Ideogram.version,
-    script, tmp, protocol, dataDir;
+      host = location.host,
+      version = Ideogram.version,
+      script,
+      tmp,
+      protocol,
+      dataDir;
 
   if (host !== 'localhost' && host !== '127.0.0.1') {
-    return (
-      'https://rawgit.com/jimlund/web/master/data/bands/native/'
-    );
+    //JIM
+    return 'https://rawgit.com/jimlund/web/master/data/bands/native/';
   }
 
   for (var i = 0; i < scripts.length; i++) {
     script = scripts[i];
-    if (
-      'src' in script &&
-      /ideogram/.test(script.src.split('/').slice(-1))
-    ) {
+    if ('src' in script && /ideogram/.test(script.src.split('/').slice(-1))) {
       tmp = script.src.split('//');
       protocol = tmp[0];
-      tmp = '/' + tmp[1].split('/').slice(0,-2).join('/');
+      tmp = '/' + tmp[1].split('/').slice(0, -2).join('/');
       dataDir = protocol + '//' + tmp + '/data/bands/native/';
       return dataDir;
     }
@@ -15817,15 +15670,17 @@ function getDataDir() {
  */
 function getChromosomeModel(bands, chromosome, taxid, chrIndex) {
   var chr = {},
-    band,
-    width, pxStop,
-    chrHeight = this.config.chrHeight,
-    maxLength = this.maxLength,
-    chrLength,
-    cs, hasBands;
+      band,
+      width,
+      pxStop,
+      chrHeight = this.config.chrHeight,
+      maxLength = this.maxLength,
+      chrLength,
+      cs,
+      hasBands;
 
   cs = this.coordinateSystem;
-  hasBands = (typeof bands !== 'undefined');
+  hasBands = typeof bands !== 'undefined';
 
   if (hasBands) {
     chr.name = chromosome;
@@ -15854,7 +15709,7 @@ function getChromosomeModel(bands, chromosome, taxid, chrIndex) {
       var csLength = band[cs].stop - band[cs].start;
       width = chrHeight * chr.length / maxLength[cs] * csLength / chrLength;
 
-      bands[i].px = {start: pxStop, stop: pxStop + width, width: width};
+      bands[i].px = { start: pxStop, stop: pxStop + width, width: width };
 
       pxStop = bands[i].px.stop;
 
@@ -15894,10 +15749,7 @@ function getChromosomeModel(bands, chromosome, taxid, chrIndex) {
   chr.bands = bands;
 
   chr.centromerePosition = '';
-  if (
-    hasBands && bands[0].name[0] === 'p' && bands[1].name[0] === 'q' &&
-    bands[0].bp.stop - bands[0].bp.start < 2E6
-  ) {
+  if (hasBands && bands[0].name[0] === 'p' && bands[1].name[0] === 'q' && bands[0].bp.stop - bands[0].bp.start < 2E6) {
     // As with almost all mouse chromosome, chimpanzee chr22
     chr.centromerePosition = 'telocentric';
 
@@ -15930,80 +15782,53 @@ function drawChromosomeLabels() {
   var chrSetLabelTranslate = ideo._layout.getChromosomeSetLabelTranslate();
 
   // Append chromosomes set's labels
-  d3.selectAll(ideo.selector + ' .chromosome-set-container')
-    .append('text')
-    .data(ideo.chromosomesArray)
-    .attr('class', 'chromosome-set-label ' + chromosomeLabelClass)
-    .attr('transform', chrSetLabelTranslate)
-    .attr('x', chrSetLabelXPosition)
-    .attr('y', function(d, i) {
-      return ideo._layout.getChromosomeSetLabelYPosition(i);
-    })
-    .attr('text-anchor', ideo._layout.getChromosomeSetLabelAnchor())
-    .each(function(d, i) {
-      // Get label lines
-      var lines;
-      if (d.name.indexOf(' ') === -1) {
-        lines = [d.name];
+  d3.selectAll(ideo.selector + ' .chromosome-set-container').append('text').data(ideo.chromosomesArray).attr('class', 'chromosome-set-label ' + chromosomeLabelClass).attr('transform', chrSetLabelTranslate).attr('x', chrSetLabelXPosition).attr('y', function (d, i) {
+    return ideo._layout.getChromosomeSetLabelYPosition(i);
+  }).attr('text-anchor', ideo._layout.getChromosomeSetLabelAnchor()).each(function (d, i) {
+    // Get label lines
+    var lines;
+    if (d.name.indexOf(' ') === -1) {
+      lines = [d.name];
+    } else {
+      lines = d.name.match(/^(.*)\s+([^\s]+)$/).slice(1).reverse();
+    }
+
+    if ('sex' in ideo.config && ideo.config.ploidy === 2 && i === ideo.sexChromosomes.index) {
+      if (ideo.config.sex === 'male') {
+        lines = ['XY'];
       } else {
-        lines = d.name.match(/^(.*)\s+([^\s]+)$/).slice(1).reverse();
+        lines = ['XX'];
       }
+    }
 
-      if (
-        'sex' in ideo.config &&
-        ideo.config.ploidy === 2 &&
-        i === ideo.sexChromosomes.index
-      ) {
-        if (ideo.config.sex === 'male') {
-          lines = ['XY'];
-        } else {
-          lines = ['XX'];
-        }
-      }
-
-      // Render label lines
-      d3.select(this).selectAll('tspan')
-        .data(lines)
-        .enter()
-        .append('tspan')
-        .attr('dy', function(d, i) {
-          return i * -1.2 + 'em';
-        })
-        .attr('x', ideo._layout.getChromosomeSetLabelXPosition())
-        .attr('class', function(a, i) {
-          var fullLabels = ideo.config.fullChromosomeLabels;
-          return i === 1 && fullLabels ? 'italic' : null;
-        }).text(String);
-    });
+    // Render label lines
+    d3.select(this).selectAll('tspan').data(lines).enter().append('tspan').attr('dy', function (d, i) {
+      return i * -1.2 + 'em';
+    }).attr('x', ideo._layout.getChromosomeSetLabelXPosition()).attr('class', function (a, i) {
+      var fullLabels = ideo.config.fullChromosomeLabels;
+      return i === 1 && fullLabels ? 'italic' : null;
+    }).text(String);
+  });
 
   var setLabelTranslate = ideo._layout.getChromosomeSetLabelTranslate();
 
   // Append chromosomes labels
-  d3.selectAll(ideo.selector + ' .chromosome-set-container')
-    .each(function(a, chrSetNumber) {
-      d3.select(this).selectAll('.chromosome')
-        .append('text')
-        .attr('class', 'chrLabel')
-        .attr('transform', setLabelTranslate)
-        .attr('x', function(d, i) {
-          return ideo._layout.getChromosomeLabelXPosition(i);
-        })
-        .attr('y', function(d, i) {
-          return ideo._layout.getChromosomeLabelYPosition(i);
-        })
-        .text(function(d, chrNumber) {
-          return ideo._ploidy.getAncestor(chrSetNumber, chrNumber);
-        })
-        .attr('text-anchor', 'middle');
-    });
+  d3.selectAll(ideo.selector + ' .chromosome-set-container').each(function (a, chrSetNumber) {
+    d3.select(this).selectAll('.chromosome').append('text').attr('class', 'chrLabel').attr('transform', setLabelTranslate).attr('x', function (d, i) {
+      return ideo._layout.getChromosomeLabelXPosition(i);
+    }).attr('y', function (d, i) {
+      return ideo._layout.getChromosomeLabelYPosition(i);
+    }).text(function (d, chrNumber) {
+      return ideo._ploidy.getAncestor(chrSetNumber, chrNumber);
+    }).attr('text-anchor', 'middle');
+  });
 }
 
 /**
  * Rotates chromosome labels by 90 degrees, e.g. upon clicking a chromosome to focus.
  */
 function rotateChromosomeLabels(chr, chrIndex, orientation, scale) {
-  var chrMargin, chrWidth, ideo, x, y,
-    numAnnotTracks, scaleSvg, tracksHeight, chrMargin2;
+  var chrMargin, chrWidth, ideo, x, y, numAnnotTracks, scaleSvg, tracksHeight, chrMargin2;
 
   chrWidth = this.config.chrWidth;
   chrMargin = this.config.chrMargin * chrIndex;
@@ -16011,18 +15836,14 @@ function rotateChromosomeLabels(chr, chrIndex, orientation, scale) {
 
   ideo = this;
 
-  if (
-    typeof (scale) !== 'undefined' &&
-    scale.hasOwnProperty('x') &&
-    !(scale.x === 1 && scale.y === 1)
-  ) {
+  if (typeof scale !== 'undefined' && scale.hasOwnProperty('x') && !(scale.x === 1 && scale.y === 1)) {
     scaleSvg = 'scale(' + scale.x + ',' + scale.y + ')';
     x = -6;
-    y = (scale === '' ? -16 : -14);
+    y = scale === '' ? -16 : -14;
   } else {
     x = -8;
     y = -16;
-    scale = {x: 1, y: 1};
+    scale = { x: 1, y: 1 };
     scaleSvg = '';
   }
 
@@ -16046,11 +15867,7 @@ function rotateChromosomeLabels(chr, chrIndex, orientation, scale) {
 
     y = chrMargin + chrMargin2;
 
-    chr.selectAll('text.chrLabel')
-      .attr('transform', scaleSvg)
-      .selectAll('tspan')
-      .attr('x', x)
-      .attr('y', y);
+    chr.selectAll('text.chrLabel').attr('transform', scaleSvg).selectAll('tspan').attr('x', x).attr('y', y);
   } else {
     chrIndex -= 1;
 
@@ -16068,11 +15885,7 @@ function rotateChromosomeLabels(chr, chrIndex, orientation, scale) {
     x = -(chrMargin + chrMargin2) + 3 + tracksHeight;
     x /= scale.x;
 
-    chr.selectAll('text.chrLabel')
-      .attr('transform', 'rotate(-90)' + scaleSvg)
-      .selectAll('tspan')
-      .attr('x', x)
-      .attr('y', y);
+    chr.selectAll('text.chrLabel').attr('transform', 'rotate(-90)' + scaleSvg).selectAll('tspan').attr('x', x).attr('y', y);
   }
 }
 
@@ -16097,15 +15910,10 @@ function drawChromosome(chrModel, chrIndex, container, k) {
   var adapter = __WEBPACK_IMPORTED_MODULE_1__model_adapter__["a" /* ModelAdapter */].getInstance(chrModel);
 
   // Append chromosome's container
-  var chromosome = container
-    .append('g')
-    .attr('id', chrModel.id)
-    .attr('class', 'chromosome ' + adapter.getCssClass())
-    .attr('transform', 'translate(0, ' + k * chrMargin + ')');
+  var chromosome = container.append('g').attr('id', chrModel.id).attr('class', 'chromosome ' + adapter.getCssClass()).attr('transform', 'translate(0, ' + k * chrMargin + ')');
 
   // Render chromosome
-  return __WEBPACK_IMPORTED_MODULE_2__views_chromosome__["a" /* Chromosome */].getInstance(adapter, this.config, this)
-    .render(chromosome, chrIndex, k);
+  return __WEBPACK_IMPORTED_MODULE_2__views_chromosome__["a" /* Chromosome */].getInstance(adapter, this.config, this).render(chromosome, chrIndex, k);
 }
 
 /**
@@ -16119,12 +15927,9 @@ function rotateAndToggleDisplay(chromosome) {
     return;
   }
 
-  var chrSetNumber =
-    Number(d3.select(chromosome.parentNode).attr('data-set-number'));
+  var chrSetNumber = Number(d3.select(chromosome.parentNode).attr('data-set-number'));
 
-  var chrNumber = Array.prototype.slice.call(
-    d3.select(chromosome.parentNode).selectAll('g.chromosome')._groups[0]
-  ).indexOf(chromosome);
+  var chrNumber = Array.prototype.slice.call(d3.select(chromosome.parentNode).selectAll('g.chromosome')._groups[0]).indexOf(chromosome);
 
   return this._layout.rotate(chrSetNumber, chrNumber, chromosome);
 }
@@ -16138,85 +15943,119 @@ function getSvg() {
 
 
 
-
 /***/ }),
 /* 260 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-class ModelAdapter {
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return ModelAdapter; });
+/* unused harmony export ModelNoBandsAdapter */
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
-  constructor(model) {
+function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+var ModelAdapter = function () {
+  function ModelAdapter(model) {
+    _classCallCheck(this, ModelAdapter);
+
     this._model = model;
     this._class = 'ModelAdapter';
   }
 
-  static getInstance(model) {
-    if (model.bands) {
-      return new ModelAdapter(model);
-    } else {
-      return new ModelNoBandsAdapter(model);
+  _createClass(ModelAdapter, [{
+    key: 'getModel',
+    value: function getModel() {
+      return this._model;
     }
+  }, {
+    key: 'getCssClass',
+    value: function getCssClass() {
+      return '';
+    }
+  }], [{
+    key: 'getInstance',
+    value: function getInstance(model) {
+      if (model.bands) {
+        return new ModelAdapter(model);
+      } else {
+        return new ModelNoBandsAdapter(model);
+      }
+    }
+  }]);
+
+  return ModelAdapter;
+}();
+
+var ModelNoBandsAdapter = function (_ModelAdapter) {
+  _inherits(ModelNoBandsAdapter, _ModelAdapter);
+
+  function ModelNoBandsAdapter(model) {
+    _classCallCheck(this, ModelNoBandsAdapter);
+
+    var _this = _possibleConstructorReturn(this, (ModelNoBandsAdapter.__proto__ || Object.getPrototypeOf(ModelNoBandsAdapter)).call(this, model));
+
+    _this._class = 'ModelNoBandsAdapter';
+    return _this;
   }
 
-  getModel() {
-    return this._model;
-  }
-
-  getCssClass() {
-    return '';
-  }
-}
-/* harmony export (immutable) */ __webpack_exports__["a"] = ModelAdapter;
-
-
-class ModelNoBandsAdapter extends ModelAdapter {
-
-  constructor(model) {
-    super(model);
-    this._class = 'ModelNoBandsAdapter';
-  }
-
-  getModel() {
-    this._model.bands = [];
+  _createClass(ModelNoBandsAdapter, [{
+    key: 'getModel',
+    value: function getModel() {
+      this._model.bands = [];
 
       // If chromosome width more, then 1 add single band to bands array
-    if (this._model.width > 1) {
-      this._model.bands.push({
-        name: 'q',
-        px: {
-          start: 0,
-          stop: this._model.width,
-          width: this._model.width
-        }
-      });
+      if (this._model.width > 1) {
+        this._model.bands.push({
+          name: 'q',
+          px: {
+            start: 0,
+            stop: this._model.width,
+            width: this._model.width
+          }
+        });
+      }
+
+      return this._model;
     }
+  }, {
+    key: 'getCssClass',
+    value: function getCssClass() {
+      return 'noBands';
+    }
+  }]);
 
-    return this._model;
-  }
-
-  getCssClass() {
-    return 'noBands';
-  }
-
-}
-/* unused harmony export ModelNoBandsAdapter */
-
-
+  return ModelNoBandsAdapter;
+}(ModelAdapter);
 
 /***/ }),
 /* 261 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return Chromosome; });
+/* unused harmony export MetacentricChromosome */
+/* unused harmony export TelocentricChromosome */
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__color__ = __webpack_require__(262);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__range__ = __webpack_require__(263);
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
 
 
-class Chromosome {
 
-  constructor(adapter, config, ideo) {
+var Chromosome = function () {
+  function Chromosome(adapter, config, ideo) {
+    _classCallCheck(this, Chromosome);
+
     this._adapter = adapter;
     this._model = this._adapter.getModel();
     this._config = config;
@@ -16228,146 +16067,131 @@ class Chromosome {
   /**
    * Factory method
    */
-  static getInstance(adapter, config, ideo) {
-    if (adapter.getModel().centromerePosition === 'telocentric') {
-      return new TelocentricChromosome(adapter, config, ideo);
-    } else {
-      return new MetacentricChromosome(adapter, config, ideo);
-    }
-  };
 
-  _addPArmShape(clipPath, isPArmRendered) {
-    if (isPArmRendered) {
-      return clipPath.concat(this._getPArmShape());
-    } else {
-      return clipPath;
-    }
-  };
 
-  _addQArmShape(clipPath, isQArmRendered) {
-    if (isQArmRendered) {
-      return clipPath.concat(this._getQArmShape());
-    } else {
-      return clipPath;
-    }
-  };
-
-  /**
-   * Append bands container and apply clip-path to it
-   */
-  render(container, chrSetNumber, chrNumber) {
-
-    var self = this;
-
-    container = container.append('g')
-      .attr('class', 'bands')
-      .attr('clip-path', 'url(#' + this._model.id + '-chromosome-set-clippath)');
-
-    // Render chromosome arms
-    var isPArmRendered = this._renderPArm(container, chrSetNumber, chrNumber);
-    var isQArmRendered = this._renderQArm(container, chrSetNumber, chrNumber);
-
-    // Render range set
-    this._renderRangeSet(container, chrSetNumber, chrNumber);
-
-    // Push arms shape string into clipPath array
-    var clipPath = [];
-    clipPath = this._addPArmShape(clipPath, isPArmRendered);
-    clipPath = this._addQArmShape(clipPath, isQArmRendered);
-
-    var opacity = '0';
-    var fill = '';
-    var isFullyBanded = this.isFullyBanded();
-    if ('ancestors' in this._ideo.config && !('rangeSet' in this._ideo.config)) {
-      // E.g. diploid human genome (with translucent overlay)
-      fill = self._color.getArmColor(chrSetNumber, chrNumber, 0);
-      if (isFullyBanded) {
-        opacity = '0.5';
+  _createClass(Chromosome, [{
+    key: '_addPArmShape',
+    value: function _addPArmShape(clipPath, isPArmRendered) {
+      if (isPArmRendered) {
+        return clipPath.concat(this._getPArmShape());
+      } else {
+        return clipPath;
       }
-    } else if (isFullyBanded) {
-      // E.g. mouse reference genome
-      opacity = null;
-      fill = 'transparent';
-    } else if (!('ancestors' in this._ideo.config)) {
-      // E.g. chimpanzee assembly Pan_tro 3.0
-      opacity = '1';
     }
+  }, {
+    key: '_addQArmShape',
+    value: function _addQArmShape(clipPath, isQArmRendered) {
+      if (isQArmRendered) {
+        return clipPath.concat(this._getQArmShape());
+      } else {
+        return clipPath;
+      }
+    }
+  }, {
+    key: 'render',
 
-    // Render chromosome border
-    container.append('g')
-      .attr('class', 'chromosome-border')
-      .selectAll('path')
-      .data(clipPath)
-      .enter()
-      .append('path')
-      .attr('fill', fill)
-      .style('fill-opacity', opacity)
-      .attr('stroke', function(d, i) {
+
+    /**
+     * Append bands container and apply clip-path to it
+     */
+    value: function render(container, chrSetNumber, chrNumber) {
+
+      var self = this;
+
+      container = container.append('g').attr('class', 'bands').attr('clip-path', 'url(#' + this._model.id + '-chromosome-set-clippath)');
+
+      // Render chromosome arms
+      var isPArmRendered = this._renderPArm(container, chrSetNumber, chrNumber);
+      var isQArmRendered = this._renderQArm(container, chrSetNumber, chrNumber);
+
+      // Render range set
+      this._renderRangeSet(container, chrSetNumber, chrNumber);
+
+      // Push arms shape string into clipPath array
+      var clipPath = [];
+      clipPath = this._addPArmShape(clipPath, isPArmRendered);
+      clipPath = this._addQArmShape(clipPath, isQArmRendered);
+
+      var opacity = '0';
+      var fill = '';
+      var isFullyBanded = this.isFullyBanded();
+      if ('ancestors' in this._ideo.config && !('rangeSet' in this._ideo.config)) {
+        // E.g. diploid human genome (with translucent overlay)
+        fill = self._color.getArmColor(chrSetNumber, chrNumber, 0);
+        if (isFullyBanded) {
+          opacity = '0.5';
+        }
+      } else if (isFullyBanded) {
+        // E.g. mouse reference genome
+        opacity = null;
+        fill = 'transparent';
+      } else if (!('ancestors' in this._ideo.config)) {
+        // E.g. chimpanzee assembly Pan_tro 3.0
+        opacity = '1';
+      }
+
+      // Render chromosome border
+      container.append('g').attr('class', 'chromosome-border').selectAll('path').data(clipPath).enter().append('path').attr('fill', fill).style('fill-opacity', opacity).attr('stroke', function (d, i) {
         return self._color.getBorderColor(chrSetNumber, chrNumber, i);
-      })
-      .attr('stroke-width', function(d) {
-        return ('strokeWidth' in d ? d.strokeWidth : 1);
-      })
-      .attr('d', function(d) {
+      }).attr('stroke-width', function (d) {
+        return 'strokeWidth' in d ? d.strokeWidth : 1;
+      }).attr('d', function (d) {
         return d.path;
-      }).attr('class', function(d) {
+      }).attr('class', function (d) {
         return d.class;
       });
 
-    return clipPath;
-  };
-
-  _renderRangeSet(container, chrSetNumber, chrNumber) {
-    if (!('rangeSet' in this._config)) {
-      return;
+      return clipPath;
     }
+  }, {
+    key: '_renderRangeSet',
+    value: function _renderRangeSet(container, chrSetNumber, chrNumber) {
+      if (!('rangeSet' in this._config)) {
+        return;
+      }
 
-    var rangeSet = this._config.rangeSet.filter(function(range) {
-      return range.chr - 1 === chrSetNumber;
-    }).map(function(range) {
-      return new __WEBPACK_IMPORTED_MODULE_1__range__["a" /* Range */](range);
-    });
+      var rangeSet = this._config.rangeSet.filter(function (range) {
+        return range.chr - 1 === chrSetNumber;
+      }).map(function (range) {
+        return new __WEBPACK_IMPORTED_MODULE_1__range__["a" /* Range */](range);
+      });
 
-    var rangesContainer = container.append('g').attr('class', 'range-set');
+      var rangesContainer = container.append('g').attr('class', 'range-set');
 
-    var self = this;
-    var ideo = self._ideo;
-    var bandsXOffset = ideo._bandsXOffset;
+      var self = this;
+      var ideo = self._ideo;
+      var bandsXOffset = ideo._bandsXOffset;
 
-    rangesContainer.selectAll('rect.range')
-      .data(rangeSet)
-      .enter()
-      .append('rect')
-      .attr('class', 'range')
-      .attr('x', function(range) {
+      rangesContainer.selectAll('rect.range').data(rangeSet).enter().append('rect').attr('class', 'range').attr('x', function (range) {
         var startPx = ideo.convertBpToPx(self._model, range.getStart());
         return startPx - bandsXOffset;
-      }).attr('y', 0)
-      .attr('width', function(range) {
+      }).attr('y', 0).attr('width', function (range) {
         var lengthPx = ideo.convertBpToPx(self._model, range.getLength());
         return lengthPx - bandsXOffset;
-      }).attr('height', this._config.chrWidth)
-      .style('fill', function(range) {
+      }).attr('height', this._config.chrWidth).style('fill', function (range) {
         return range.getColor(chrNumber);
       });
-  };
-
-  /**
-   * Get chromosome's shape main values
-   */
-  _getShapeData() {
-      // First q band from bands sequence
-    var firstQBand;
-    for (var i = 0; i < this._model.bands.length; i++) {
-      if (this._model.bands[i].name[0] === 'q') {
-        firstQBand = this._model.bands[i];
-        break;
-      }
     }
+  }, {
+    key: '_getShapeData',
 
-    // Chromosome's right position
-    var lastBand = this._model.bands.length - 1;
-    var rightTerminalPosition = this._model.bands[lastBand].px.stop;
+
+    /**
+     * Get chromosome's shape main values
+     */
+    value: function _getShapeData() {
+      // First q band from bands sequence
+      var firstQBand;
+      for (var i = 0; i < this._model.bands.length; i++) {
+        if (this._model.bands[i].name[0] === 'q') {
+          firstQBand = this._model.bands[i];
+          break;
+        }
+      }
+
+      // Chromosome's right position
+      var lastBand = this._model.bands.length - 1;
+      var rightTerminalPosition = this._model.bands[lastBand].px.stop;
 
       // Properties description:
       // x1 - left terminal start position
@@ -16375,286 +16199,278 @@ class Chromosome {
       // x3 - right terminal end position
       // w - chromosome width
       // b - bump size
-    return {
-      x1: 0,
-      x2: firstQBand ? firstQBand.px.start : rightTerminalPosition,
-      x3: rightTerminalPosition,
-      w: this._config.chrWidth,
-      b: this._config.chrWidth / this._bumpCoefficient
-    };
-  };
-
-  _getPArmShape() {
-    var d = this._getShapeData(),
-      x = d.x2 - d.b;
-
-    if (this.isFullyBanded() || 'ancestors' in this._ideo.config) {
-      // Encountered when chromosome has any of:
-      //  - One placeholder "band", e.g. pig genome GCF_000003025.5
-      //  - Many (> 2) bands, e.g. human reference genome
-      //  - Ancestor colors in ploidy configuration, as in ploidy_basic.html
       return {
-        class: '',
-        path:
-          'M' + d.b + ',0 ' +
-          'L' + x + ',0 ' +
-          'Q' + (d.x2 + d.b) + ',' + (d.w / 2) + ',' + x + ',' + d.w + ' ' +
-          'L' + d.b + ',' + d.w + ' ' +
-          'Q-' + d.b + ',' + (d.w / 2) + ',' + d.b + ',0'
+        x1: 0,
+        x2: firstQBand ? firstQBand.px.start : rightTerminalPosition,
+        x3: rightTerminalPosition,
+        w: this._config.chrWidth,
+        b: this._config.chrWidth / this._bumpCoefficient
       };
-    } else {
-      // e.g. chimpanzee assembly Pan_tro 3.0
-      return [{
-        class: '',
-        path:
-          'M' + d.b + ',0 ' +
-          'L' + (x - 2) + ',0 ' +
-          'L' + (x - 2) + ',' + d.w + ' ' +
-          'L' + d.b + ',' + d.w + ' ' +
-          'Q-' + d.b + ',' + (d.w / 2) + ',' + d.b + ',0'
-      }, {
-        class: 'acen',
-        path:
-          'M' + x + ',0 ' +
-          'Q' + (d.x2 + d.b) + ',' + (d.w / 2) + ',' + x + ',' + d.w + ' ' +
-          'L' + x + ',' + d.w + ' ' +
-          'L' + (x - 2) + ',' + d.w + ' ' +
-          'L' + (x - 2) + ',0'
-      }];
     }
-  };
+  }, {
+    key: '_getPArmShape',
+    value: function _getPArmShape() {
+      var d = this._getShapeData(),
+          x = d.x2 - d.b;
 
-  _getQArmShape() {
-    var d = this._getShapeData(),
-      x = d.x3 - d.b,
-      x2b = d.x2 + d.b;
-
-    if (this.isFullyBanded() || 'ancestors' in this._ideo.config) {
-      return {
-        class: '',
-        path:
-          'M' + x2b + ',0 ' +
-          'L' + x + ',0 ' +
-          'Q' + (d.x3 + d.b) + ',' + (d.w / 2) + ',' + x + ',' + d.w + ' ' +
-          'L' + x2b + ',' + d.w + ' ' +
-          'Q' + (d.x2 - d.b) + ',' + (d.w / 2) + ',' + x2b + ',0'
-      };
-    } else {
-      // e.g. chimpanzee assembly Pan_tro 3.0
-      return [{
-        path:
-          'M' + x2b + ',0 ' +
-          'L' + x + ',0 ' +
-          'Q' + (d.x3 + d.b) + ',' + (d.w / 2) + ',' + x + ',' + d.w + ' ' +
-          'L' + x2b + ',' + d.w + ' ' +
-          'L' + x2b + ',0'
-      }, {
-        class: 'acen',
-        path:
-          'M' + x2b + ',0' +
-          'Q' + (d.x2 - d.b) + ',' + (d.w / 2) + ',' + x2b + ',' + d.w + ' ' +
-          'L' + x2b + ',' + d.w +
-          'L' + (x2b + 2) + ',' + d.w +
-          'L' + (x2b + 2) + ',0'
-      }];
+      if (this.isFullyBanded() || 'ancestors' in this._ideo.config) {
+        // Encountered when chromosome has any of:
+        //  - One placeholder "band", e.g. pig genome GCF_000003025.5
+        //  - Many (> 2) bands, e.g. human reference genome
+        //  - Ancestor colors in ploidy configuration, as in ploidy_basic.html
+        return {
+          class: '',
+          path: 'M' + d.b + ',0 ' + 'L' + x + ',0 ' + 'Q' + (d.x2 + d.b) + ',' + d.w / 2 + ',' + x + ',' + d.w + ' ' + 'L' + d.b + ',' + d.w + ' ' + 'Q-' + d.b + ',' + d.w / 2 + ',' + d.b + ',0'
+        };
+      } else {
+        // e.g. chimpanzee assembly Pan_tro 3.0
+        return [{
+          class: '',
+          path: 'M' + d.b + ',0 ' + 'L' + (x - 2) + ',0 ' + 'L' + (x - 2) + ',' + d.w + ' ' + 'L' + d.b + ',' + d.w + ' ' + 'Q-' + d.b + ',' + d.w / 2 + ',' + d.b + ',0'
+        }, {
+          class: 'acen',
+          path: 'M' + x + ',0 ' + 'Q' + (d.x2 + d.b) + ',' + d.w / 2 + ',' + x + ',' + d.w + ' ' + 'L' + x + ',' + d.w + ' ' + 'L' + (x - 2) + ',' + d.w + ' ' + 'L' + (x - 2) + ',0'
+        }];
+      }
     }
-  };
+  }, {
+    key: '_getQArmShape',
+    value: function _getQArmShape() {
+      var d = this._getShapeData(),
+          x = d.x3 - d.b,
+          x2b = d.x2 + d.b;
 
-  isFullyBanded() {
-    return (
-      this._model.bands &&
-      (this._model.bands.length !== 2 || this._model.bands[0].name[0] === 'q')
-    );
-  };
-
-  /**
-   * Render arm bands
-   */
-  _renderBands(container, chrSetNumber, chrNumber, bands, arm) {
-    var self = this;
-    var armNumber = arm === 'p' ? 0 : 1;
-    var fill = '';
-    if ('ancestors' in self._ideo.config && !(self.isFullyBanded())) {
-      fill = self._color.getArmColor(chrSetNumber, chrNumber, armNumber);
+      if (this.isFullyBanded() || 'ancestors' in this._ideo.config) {
+        return {
+          class: '',
+          path: 'M' + x2b + ',0 ' + 'L' + x + ',0 ' + 'Q' + (d.x3 + d.b) + ',' + d.w / 2 + ',' + x + ',' + d.w + ' ' + 'L' + x2b + ',' + d.w + ' ' + 'Q' + (d.x2 - d.b) + ',' + d.w / 2 + ',' + x2b + ',0'
+        };
+      } else {
+        // e.g. chimpanzee assembly Pan_tro 3.0
+        return [{
+          path: 'M' + x2b + ',0 ' + 'L' + x + ',0 ' + 'Q' + (d.x3 + d.b) + ',' + d.w / 2 + ',' + x + ',' + d.w + ' ' + 'L' + x2b + ',' + d.w + ' ' + 'L' + x2b + ',0'
+        }, {
+          class: 'acen',
+          path: 'M' + x2b + ',0' + 'Q' + (d.x2 - d.b) + ',' + d.w / 2 + ',' + x2b + ',' + d.w + ' ' + 'L' + x2b + ',' + d.w + 'L' + (x2b + 2) + ',' + d.w + 'L' + (x2b + 2) + ',0'
+        }];
+      }
     }
+  }, {
+    key: 'isFullyBanded',
+    value: function isFullyBanded() {
+      return this._model.bands && (this._model.bands.length !== 2 || this._model.bands[0].name[0] === 'q');
+    }
+  }, {
+    key: '_renderBands',
 
-    container.selectAll('path.band.' + arm)
-      .data(bands)
-      .enter()
-      .append('path')
-      .attr('id', function(d) {
+
+    /**
+     * Render arm bands
+     */
+    value: function _renderBands(container, chrSetNumber, chrNumber, bands, arm) {
+      var self = this;
+      var armNumber = arm === 'p' ? 0 : 1;
+      var fill = '';
+      if ('ancestors' in self._ideo.config && !self.isFullyBanded()) {
+        fill = self._color.getArmColor(chrSetNumber, chrNumber, armNumber);
+      }
+
+      container.selectAll('path.band.' + arm).data(bands).enter().append('path').attr('id', function (d) {
         return self._model.id + '-' + d.name.replace('.', '-');
-      })
-      .attr('class', function(d) {
+      }).attr('class', function (d) {
         return 'band ' + arm + '-band ' + d.stain;
-      })
-      .attr('d', function(d) {
+      }).attr('d', function (d) {
         var start = self._ideo.round(d.px.start);
         var length = self._ideo.round(d.px.width);
 
         var x = start + length;
 
-        return 'M ' + start + ', 0' +
-              'l ' + length + ' 0 ' +
-              'l 0 ' + self._config.chrWidth + ' ' +
-              'l -' + length + ' 0 z';
-      })
-      .style('fill', fill);
-  };
-
-  /**
-   * Render chromosome's p arm.
-   * Returns boolean which indicates is any bands was rendered.
-   */
-  _renderPArm(container, chrSetNumber, chrNumber) {
-    var bands = this._model.bands.filter(function(band) {
-      return band.name[0] === 'p';
-    });
-
-    this._renderBands(container, chrSetNumber, chrNumber, bands, 'p');
-
-    return Boolean(bands.length);
-  };
-
-  /**
-   * Render chromosome's q arm.
-   * Returns boolean which indicates is any bands was rendered.
-   */
-  _renderQArm(container, chrSetNumber, chrNumber) {
-    var bands = this._model.bands.filter(function(band) {
-      return band.name[0] === 'q';
-    });
-
-    this._renderBands(container, chrSetNumber, chrNumber, bands, 'q');
-
-    return Boolean(bands.length);
-  };
-}
-/* harmony export (immutable) */ __webpack_exports__["a"] = Chromosome;
+        return 'M ' + start + ', 0' + 'l ' + length + ' 0 ' + 'l 0 ' + self._config.chrWidth + ' ' + 'l -' + length + ' 0 z';
+      }).style('fill', fill);
+    }
+  }, {
+    key: '_renderPArm',
 
 
+    /**
+     * Render chromosome's p arm.
+     * Returns boolean which indicates is any bands was rendered.
+     */
+    value: function _renderPArm(container, chrSetNumber, chrNumber) {
+      var bands = this._model.bands.filter(function (band) {
+        return band.name[0] === 'p';
+      });
+
+      this._renderBands(container, chrSetNumber, chrNumber, bands, 'p');
+
+      return Boolean(bands.length);
+    }
+  }, {
+    key: '_renderQArm',
 
 
-class MetacentricChromosome extends Chromosome {
+    /**
+     * Render chromosome's q arm.
+     * Returns boolean which indicates is any bands was rendered.
+     */
+    value: function _renderQArm(container, chrSetNumber, chrNumber) {
+      var bands = this._model.bands.filter(function (band) {
+        return band.name[0] === 'q';
+      });
 
-  constructor(model, config, ideo) {
-    super(model, config, ideo);
-    this._class = 'MetacentricChromosome';
+      this._renderBands(container, chrSetNumber, chrNumber, bands, 'q');
+
+      return Boolean(bands.length);
+    }
+  }], [{
+    key: 'getInstance',
+    value: function getInstance(adapter, config, ideo) {
+      if (adapter.getModel().centromerePosition === 'telocentric') {
+        return new TelocentricChromosome(adapter, config, ideo);
+      } else {
+        return new MetacentricChromosome(adapter, config, ideo);
+      }
+    }
+  }]);
+
+  return Chromosome;
+}();
+
+var MetacentricChromosome = function (_Chromosome) {
+  _inherits(MetacentricChromosome, _Chromosome);
+
+  function MetacentricChromosome(model, config, ideo) {
+    _classCallCheck(this, MetacentricChromosome);
+
+    var _this = _possibleConstructorReturn(this, (MetacentricChromosome.__proto__ || Object.getPrototypeOf(MetacentricChromosome)).call(this, model, config, ideo));
+
+    _this._class = 'MetacentricChromosome';
+    return _this;
   }
-}
-/* unused harmony export MetacentricChromosome */
 
+  return MetacentricChromosome;
+}(Chromosome);
 
+var TelocentricChromosome = function (_Chromosome2) {
+  _inherits(TelocentricChromosome, _Chromosome2);
 
+  function TelocentricChromosome(model, config, ideo) {
+    _classCallCheck(this, TelocentricChromosome);
 
-class TelocentricChromosome extends Chromosome {
+    var _this2 = _possibleConstructorReturn(this, (TelocentricChromosome.__proto__ || Object.getPrototypeOf(TelocentricChromosome)).call(this, model, config, ideo));
 
-  constructor(model, config, ideo) {
-    super(model, config, ideo);
-    this._class = 'TelocentricChromosome';
-    this._pArmOffset = 3;
+    _this2._class = 'TelocentricChromosome';
+    _this2._pArmOffset = 3;
+    return _this2;
   }
 
-  _addPArmShape(clipPath) {
-    return clipPath.concat(this._getPArmShape());
-  };
+  _createClass(TelocentricChromosome, [{
+    key: '_addPArmShape',
+    value: function _addPArmShape(clipPath) {
+      return clipPath.concat(this._getPArmShape());
+    }
+  }, {
+    key: '_getPArmShape',
+    value: function _getPArmShape() {
+      var d = this._getShapeData();
+      d.o = this._pArmOffset;
 
-  _getPArmShape() {
-    var d = this._getShapeData();
-    d.o = this._pArmOffset;
+      return [{
+        class: 'acen',
+        path: 'M' + (d.x2 + 2) + ',1' + 'L' + (d.x2 + d.o + 3.25) + ',1 ' + 'L' + (d.x2 + d.o + 3.25) + ',' + (d.w - 1) + ' ' + 'L' + (d.x2 + 2) + ',' + (d.w - 1)
+      }, {
+        class: 'gpos66',
+        path: 'M' + (d.x2 - d.o + 5) + ',0' + 'L' + (d.x2 - d.o + 3) + ',0 ' + 'L' + (d.x2 - d.o + 3) + ',' + d.w + ' ' + 'L' + (d.x2 - d.o + 5) + ',' + d.w,
+        strokeWidth: 0.5
+      }];
+    }
+  }, {
+    key: '_getQArmShape',
+    value: function _getQArmShape() {
+      var d = this._getShapeData(),
+          x = d.x3 - d.b,
+          o = this._pArmOffset + 3;
 
-    return [{
-      class: 'acen',
-      path: 'M' + (d.x2 + 2) + ',1' +
-      'L' + (d.x2 + d.o + 3.25) + ',1 ' +
-      'L' + (d.x2 + d.o + 3.25) + ',' + (d.w - 1) + ' ' +
-      'L' + (d.x2 + 2) + ',' + (d.w - 1)
-    }, {
-      class: 'gpos66',
-      path: 'M' + (d.x2 - d.o + 5) + ',0' +
-      'L' + (d.x2 - d.o + 3) + ',0 ' +
-      'L' + (d.x2 - d.o + 3) + ',' + d.w + ' ' +
-      'L' + (d.x2 - d.o + 5) + ',' + d.w,
-      strokeWidth: 0.5
-    }];
-  };
+      return {
+        class: '',
+        path: 'M' + (d.x2 + o) + ',0 ' + 'L' + x + ',0 ' + 'Q' + (d.x3 + d.b) + ',' + d.w / 2 + ',' + x + ',' + d.w + ' ' + 'L' + (d.x2 + o) + ',' + d.w
+      };
+    }
+  }]);
 
-  _getQArmShape() {
-    var d = this._getShapeData(),
-      x = d.x3 - d.b,
-      o = this._pArmOffset + 3;
-
-    return {
-      class: '',
-      path:
-      'M' + (d.x2 + o) + ',0 ' +
-      'L' + x + ',0 ' +
-      'Q' + (d.x3 + d.b) + ',' + (d.w / 2) + ',' + x + ',' + d.w + ' ' +
-      'L' + (d.x2 + o) + ',' + d.w
-    };
-  };
-}
-/* unused harmony export TelocentricChromosome */
-
-
+  return TelocentricChromosome;
+}(Chromosome);
 
 /***/ }),
 /* 262 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return Color; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__ploidy__ = __webpack_require__(90);
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
 
-class Color {
 
-  constructor(config) {
-      // Ideogram config
+var Color = function () {
+  function Color(config) {
+    _classCallCheck(this, Color);
+
+    // Ideogram config
     this._config = config;
     this._ploidy = new __WEBPACK_IMPORTED_MODULE_0__ploidy__["a" /* Ploidy */](this._config);
   }
 
-  getArmColor(chrSetNumber, chrNumber, armNumber) {
-    if (this._config.armColors) {
-      return this._config.armColors[armNumber];
-    } else if (this._config.ancestors) {
-      return this._getPolyploidArmColor(chrSetNumber, chrNumber, armNumber);
-    } else {
-      return null;
+  _createClass(Color, [{
+    key: 'getArmColor',
+    value: function getArmColor(chrSetNumber, chrNumber, armNumber) {
+      if (this._config.armColors) {
+        return this._config.armColors[armNumber];
+      } else if (this._config.ancestors) {
+        return this._getPolyploidArmColor(chrSetNumber, chrNumber, armNumber);
+      } else {
+        return null;
+      }
     }
-  }
-
-  getBorderColor(chrSetNumber, chrNumber, armNumber) {
-    if (chrNumber < this._config.ploidy) {
-      return '#000';
-    } else if (this._ploidy.exists(chrSetNumber, chrNumber, armNumber)) {
-      return '#000';
-    } else {
-      return '#fff';
+  }, {
+    key: 'getBorderColor',
+    value: function getBorderColor(chrSetNumber, chrNumber, armNumber) {
+      if (chrNumber < this._config.ploidy) {
+        return '#000';
+      } else if (this._ploidy.exists(chrSetNumber, chrNumber, armNumber)) {
+        return '#000';
+      } else {
+        return '#fff';
+      }
     }
-  }
-
-  _getPolyploidArmColor(chrSetNumber, chrNumber, armNumber) {
-    if (!this._ploidy.exists(chrSetNumber, chrNumber, armNumber)) {
-      return 'transparent';
-    } else {
-      var ancestor =
-        this._ploidy.getAncestor(chrSetNumber, chrNumber, armNumber);
-      return this._config.ancestors[ancestor];
+  }, {
+    key: '_getPolyploidArmColor',
+    value: function _getPolyploidArmColor(chrSetNumber, chrNumber, armNumber) {
+      if (!this._ploidy.exists(chrSetNumber, chrNumber, armNumber)) {
+        return 'transparent';
+      } else {
+        var ancestor = this._ploidy.getAncestor(chrSetNumber, chrNumber, armNumber);
+        return this._config.ancestors[ancestor];
+      }
     }
-  }
+  }]);
 
-}
-/* harmony export (immutable) */ __webpack_exports__["a"] = Color;
-
-
+  return Color;
+}();
 
 /***/ }),
 /* 263 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-class Range {
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return Range; });
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+var Range = function () {
 
   /**
   * Chromosome range.
@@ -16667,44 +16483,52 @@ class Range {
   * @param {Integer} data.stop - range end.
   * @param {String} data.color - range color.
   */
-  constructor(data) {
+  function Range(data) {
+    _classCallCheck(this, Range);
+
     this._data = data;
   }
 
-  getStart() {
-    return this._data.start;
-  }
-
-  getStop() {
-    return this._data.stop;
-  }
-
-  getLength() {
-    return this._data.stop - this._data.start;
-  }
-
-  getColor(chrNumber) {
-    if (!('ploidy' in this._data)) {
-      return this._getColor(chrNumber);
-    } else if ('ploidy' in this._data && this._data.ploidy[chrNumber]) {
-      return this._getColor(chrNumber);
-    } else {
-      return 'transparent';
+  _createClass(Range, [{
+    key: 'getStart',
+    value: function getStart() {
+      return this._data.start;
     }
-  }
-
-  _getColor(chrNumber) {
-    if (Array.isArray(this._data.color)) {
-      return this._data.color[chrNumber];
-    } else {
-      return this._data.color;
+  }, {
+    key: 'getStop',
+    value: function getStop() {
+      return this._data.stop;
     }
-  }
+  }, {
+    key: 'getLength',
+    value: function getLength() {
+      return this._data.stop - this._data.start;
+    }
+  }, {
+    key: 'getColor',
+    value: function getColor(chrNumber) {
+      if (!('ploidy' in this._data)) {
+        return this._getColor(chrNumber);
+      } else if ('ploidy' in this._data && this._data.ploidy[chrNumber]) {
+        return this._getColor(chrNumber);
+      } else {
+        return 'transparent';
+      }
+    }
+  }, {
+    key: '_getColor',
+    value: function _getColor(chrNumber) {
+      if (Array.isArray(this._data.color)) {
+        return this._data.color[chrNumber];
+      } else {
+        return this._data.color;
+      }
+    }
+  }]);
 
-}
-/* harmony export (immutable) */ __webpack_exports__["a"] = Range;
-
-
+  return Range;
+}();
 
 /***/ })
 /******/ ]);
+//# sourceMappingURL=ideogram.2.js.map
