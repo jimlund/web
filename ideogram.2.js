@@ -12472,10 +12472,6 @@ function init() {
       .attr('height', svgHeight)
       .html(gradients);
 
-    //JIM
-    d3.select(ideo.config.container).append("div")
-      .attr("class", "tooltip")
-      .style("opacity", 0);
 
     finishInit();
   }
