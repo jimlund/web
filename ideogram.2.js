@@ -12472,6 +12472,10 @@ function init() {
       .attr('height', svgHeight)
       .html(gradients);
 
+    //JIM
+    d3.select(ideo.config.container).append("div")
+      .attr("class", "tooltip")
+      .style("opacity", 0);
 
     finishInit();
   }
@@ -14177,6 +14181,23 @@ function drawProcessedAnnots(annots) {
           return circle;
         }
       })
+      //JIM
+      .on("mouseover", function(d) {		
+        d3.select(".tooltip").transition()		
+          .duration(200)		
+          .style("opacity", .9);
+        var matrix = this.getScreenCTM()
+            .translate(+this.getAttribute("cx"),
+                     +this.getAttribute("cy"));
+        d3.select(".tooltip").html((d.name) + "<br/>"  + (d.start) + "-" + (d.stop) + "<br/>"  + (matrix.e))	
+                .style("left", (window.pageXOffset + matrix.e) + "px")		
+                .style("top", (window.pageYOffset + matrix.f - 28) + "px");	
+        })
+      .on("mouseout", function(d) {		
+        d3.select(".tooltip").transition()		
+          .duration(500)		
+          .style("opacity", 0);	
+        })
 
       .attr('fill', function(d) {
         return d.color;
